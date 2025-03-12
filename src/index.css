@@ -1,0 +1,19 @@
+@font-face {
+  font-family: "FiraGo";
+  src: url("../fonts/firago-latin-400-normal-aODw3bZ7.woff2") format("woff2"),
+    url("../fonts/firago-latin-400-normal-DgAYIwnw.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+button,
+a {
+  font-family: "FiraGo", sans-serif;
+}
