@@ -58,10 +58,13 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <HeaderWrapper>
-      <HeaderLogo>
-        <img src="./Momentum.png" alt="logo_text" />
-        <img src="./Hourglass.png" alt="logo" />
-      </HeaderLogo>
+      <Link to="/">
+        <HeaderLogo>
+          <img src="./Momentum.png" alt="logo_text" />
+          <img src="./Hourglass.png" alt="logo" />
+        </HeaderLogo>
+      </Link>
+
       <HeaderButtons>
         <CreateAgentButton onClick={() => setIsOpen(!isOpen)}>
           თანამშრომლის შექმნა

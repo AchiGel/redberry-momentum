@@ -51,7 +51,7 @@ const FormTitle = styled.h2`
   line-height: normal;
 `;
 
-const FormLabel = styled.label`
+export const FormLabel = styled.label`
   color: #343a40;
   font-size: 14px;
   font-style: normal;
@@ -66,7 +66,7 @@ const FormLabel = styled.label`
   }
 `;
 
-const FormInput = styled.input`
+export const FormInput = styled.input`
   padding: 10px;
   border-radius: 6px;
   border: 1px solid #ced4da;
@@ -74,7 +74,7 @@ const FormInput = styled.input`
   margin-bottom: 6px;
 `;
 
-const Validation = styled.span`
+export const Validation = styled.span`
   color: #6c757d;
   font-size: 10px;
   font-style: normal;
@@ -85,7 +85,7 @@ const Validation = styled.span`
   gap: 2px;
 `;
 
-const InputWrapper = styled.div`
+export const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;
@@ -114,7 +114,7 @@ const CancelButtonBottom = styled.button`
   line-height: normal;
 `;
 
-const AddButton = styled.button`
+export const AddButton = styled.button`
   border-radius: 5px;
   background: #8338ec;
   border: none;
