@@ -1,5 +1,9 @@
-import React from "react";
+import Filtration from "../components/Filtration";
 
 export default function Home() {
-  return <div>Home</div>;
+  return (
+    <div>
+      <Filtration />
+    </div>
+  );
 }

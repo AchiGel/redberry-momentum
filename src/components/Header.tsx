@@ -1,11 +1,14 @@
 import { Link } from "react-router";
 import styled from "styled-components";
+import CreateAgentModal from "./CreateAgentModal";
+import { useState } from "react";
 
 const HeaderWrapper = styled.header`
   padding: 30px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
 `;
 
 const HeaderLogo = styled.div`
@@ -21,6 +24,7 @@ const HeaderButtons = styled.div`
 `;
 
 export default function Header() {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <HeaderWrapper>
       <HeaderLogo>
@@ -28,9 +32,10 @@ export default function Header() {
         <img src="./Hourglass.png" alt="logo" />
       </HeaderLogo>
       <HeaderButtons>
-        <Link to="">თანამშრომლის შექმნა</Link>
+        <button onClick={() => setIsOpen(!isOpen)}>თანამშრომლის შექმნა</button>
         <Link to="/create_task">შექმენი ახალი დავალება</Link>
       </HeaderButtons>
+      <CreateAgentModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </HeaderWrapper>
   );
 }
