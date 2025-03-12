@@ -45,6 +45,8 @@ export default function Home() {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
+    // ***************** ვტვირთავთ სერვერიდან წამოღებულ სტატუსებს *********************//
+
     async function loadStatuses() {
       try {
         const statuses = await getAllStatuses();
@@ -54,6 +56,8 @@ export default function Home() {
       }
     }
     loadStatuses();
+
+    // ***************** ვტვირთავთ სერვერიდან წამოღებულ დავალებებს *********************//
 
     async function loadTasks() {
       try {
