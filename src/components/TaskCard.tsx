@@ -15,9 +15,20 @@ const TaskCardUpper = styled.div`
   align-items: center;
 `;
 
-const CardPriority = styled.div`
+const CardPriority = styled.div<{ $priority: string }>`
   border-radius: 4px;
-  border: 0.5px solid #ffbe0b;
+  border: ${(props) =>
+    props.$priority === "დაბალი"
+      ? "0.5px solid #08A508"
+      : props.$priority === "საშუალო"
+      ? "0.5px solid #ffbe0b"
+      : "0.5px solid #FA4D4D"};
+  color: ${(props) =>
+    props.$priority === "დაბალი"
+      ? "#08A508"
+      : props.$priority === "საშუალო"
+      ? "#ffbe0b"
+      : "#FA4D4D"};
   background: #fff;
   padding: 4px;
   display: flex;
@@ -25,10 +36,17 @@ const CardPriority = styled.div`
   gap: 4px;
 `;
 
-const CardDepartment = styled.div`
+ // ***************** დეპარტამენტების ამბავი დასადგენია?????? *********************//
+
+const CardDepartment = styled.div<{ $department: string }>`
   padding: 5px 9px;
   border-radius: 15px;
-  background: #ff66a8;
+  background: ${(props) =>
+    props.$department === "დიზაინი"
+      ? "#FF66A8"
+      : props.$department === "გაყიდვები და მარკეტინგის დეპარტამენტი"
+      ? "##FD9A6A"
+      : "#FA4D4D"};
   color: white;
 `;
 
@@ -111,11 +129,11 @@ export default function TaskCard({
   return (
     <TaskCardLayout>
       <TaskCardUpper>
-        <CardPriority>
+        <CardPriority $priority={priority}>
           <img src={priorityIcon} alt={priority} />
           {priority}
         </CardPriority>
-        <CardDepartment>{department}</CardDepartment>
+        <CardDepartment $department={department}>{department}</CardDepartment>
         <CardDate>{date}</CardDate>
       </TaskCardUpper>
       <TaskCardMiddle>
@@ -124,7 +142,7 @@ export default function TaskCard({
       </TaskCardMiddle>
       <TaskCardBottom>
         <TaskAuthorImg>
-          <img src={authorImg} alt={authorImg} />
+          <img src={authorImg} alt={name} />
         </TaskAuthorImg>
         <TaskComments>
           <img src="./Comments.png" />
