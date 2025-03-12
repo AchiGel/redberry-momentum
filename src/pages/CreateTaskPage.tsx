@@ -7,7 +7,7 @@ import {
   Validation,
 } from "../components/CreateAgentModal";
 
-const FormTitle = styled.h1`
+export const FormTitle = styled.h1`
   color: #212529;
   font-size: 34px;
   font-style: normal;
