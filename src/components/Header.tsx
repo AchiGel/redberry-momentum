@@ -23,6 +23,37 @@ const HeaderButtons = styled.div`
   gap: 40px;
 `;
 
+const CreateAgentButton = styled.button`
+  border-radius: 5px;
+  border: 1px solid #8338ec;
+  background: #fff;
+  padding: 10px 20px;
+  color: #212529;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`;
+
+const CreateNewTaskButton = styled.button`
+  border-radius: 5px;
+  background: #8338ec;
+  border: none;
+  padding: 10px 20px;
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 4px;
+  &::after {
+    content: url("./add.png");
+    height: 20px;
+  }
+`;
+
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -32,8 +63,12 @@ export default function Header() {
         <img src="./Hourglass.png" alt="logo" />
       </HeaderLogo>
       <HeaderButtons>
-        <button onClick={() => setIsOpen(!isOpen)}>თანამშრომლის შექმნა</button>
-        <Link to="/create_task">შექმენი ახალი დავალება</Link>
+        <CreateAgentButton onClick={() => setIsOpen(!isOpen)}>
+          თანამშრომლის შექმნა
+        </CreateAgentButton>
+        <Link to="/create_task">
+          <CreateNewTaskButton>შექმენი ახალი დავალება</CreateNewTaskButton>
+        </Link>
       </HeaderButtons>
       <CreateAgentModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </HeaderWrapper>
