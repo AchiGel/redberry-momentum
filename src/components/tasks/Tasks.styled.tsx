@@ -4,6 +4,7 @@ export const TasksGrid = styled.div`
   display: grid;
   grid-template-columns: auto auto auto auto;
   gap: 52px;
+  margin-bottom: 152px;
 `;
 
 export const TasksColumn = styled.div`

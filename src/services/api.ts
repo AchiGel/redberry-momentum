@@ -22,3 +22,45 @@ export const getAllTasks = async () => {
   const data = await response.json();
   return data;
 };
+
+// ***************** სერვერიდან მოგვაქვს ყველა პროპრიტეტი *********************//
+
+export const getAllPriorities = async () => {
+  const response = await fetch(`${BASE_URL}/priorities`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${TOKEN}`,
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json();
+  return data;
+};
+
+// ***************** სერვერიდან მოგვაქვს ყველა დეპარტამენტი *********************//
+
+export const getAllDepartments = async () => {
+  const response = await fetch(`${BASE_URL}/departments`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${TOKEN}`,
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json();
+  return data;
+};
+
+// ***************** სერვერიდან მოგვაქვს ყველა დასაქმებული *********************//
+
+export const getAllEmployees = async () => {
+  const response = await fetch(`${BASE_URL}/employees`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${TOKEN}`,
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json();
+  return data;
+};

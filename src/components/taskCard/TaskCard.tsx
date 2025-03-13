@@ -14,6 +14,17 @@ import {
   TaskCommentsQuantity,
 } from "./TaskCard.styled";
 
+interface TaskCardTypes {
+  priority: string;
+  department: string;
+  date: string;
+  name: string;
+  descr: string;
+  authorImg: string;
+  comments: number;
+  priorityIcon: string;
+}
+
 export default function TaskCard({
   priority,
   department,
@@ -23,16 +34,7 @@ export default function TaskCard({
   authorImg,
   comments,
   priorityIcon,
-}: {
-  priority: string;
-  department: string;
-  date: string;
-  name: string;
-  descr: string;
-  authorImg: string;
-  comments: number;
-  priorityIcon: string;
-}) {
+}: TaskCardTypes) {
   // ***************** თარიღის ფორმატირება *********************//
   const preDate = new Date(date);
   const formattedDate = preDate.toLocaleDateString("ka-GE", {
@@ -49,7 +51,9 @@ export default function TaskCard({
             <img src={priorityIcon} alt={priority} />
             {priority}
           </CardPriority>
-          <CardDepartment $department={department}>{department}</CardDepartment>
+          <CardDepartment $department={department}>
+            {department.slice(0, 7) + "."}
+          </CardDepartment>
         </CardPriorityAndDepartment>
         <CardDate>{formattedDate}</CardDate>
       </TaskCardUpper>

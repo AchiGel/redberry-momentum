@@ -9,18 +9,18 @@ export interface Status {
   name: string;
 }
 
-interface Priority {
+export interface Priority {
   id: number;
   name: string;
   icon: string;
 }
 
-interface Department {
+export interface Department {
   id: number;
   name: string;
 }
 
-interface Employee {
+export interface Employee {
   id: number;
   name: string;
   surname: string;
