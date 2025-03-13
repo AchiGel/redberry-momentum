@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import {
-  AddButton,
-  FormInput,
-  FormLabel,
   InputWrapper,
+  FormLabel,
+  FormInput,
   Validation,
-} from "../components/CreateAgentModal";
+  AddButton,
+} from "../components/createAgentModal/CreateAgentModal.styled";
 
 export const FormTitle = styled.h1`
   color: #212529;

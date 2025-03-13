@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import Filtration from "../components/Filtration";
+import Filtration from "../components/filtration/Filtration";
 import { getAllStatuses, getAllTasks } from "../services/api";
 import { FormTitle } from "./CreateTaskPage";
-import Tasks from "../components/Tasks";
+import Tasks from "../components/tasks/Tasks";
 
 export interface Status {
   id: number;

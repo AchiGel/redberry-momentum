@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const TaskCardLayout = styled.div`
+export const TaskCardLayout = styled.div`
   border-radius: 15px;
   border: 1px solid #f7bc30;
   background: #fff;
@@ -10,12 +10,19 @@ const TaskCardLayout = styled.div`
   gap: 28px;
 `;
 
-const TaskCardUpper = styled.div`
+export const TaskCardUpper = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
 `;
 
-const CardPriority = styled.div<{ $priority: string }>`
+export const CardPriorityAndDepartment = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+export const CardPriority = styled.div<{ $priority: string }>`
   border-radius: 4px;
   border: ${(props) =>
     props.$priority === "დაბალი"
@@ -36,9 +43,9 @@ const CardPriority = styled.div<{ $priority: string }>`
   gap: 4px;
 `;
 
- // ***************** დეპარტამენტების ამბავი დასადგენია?????? *********************//
+// ***************** დეპარტამენტების ამბავი დასადგენია?????? *********************//
 
-const CardDepartment = styled.div<{ $department: string }>`
+export const CardDepartment = styled.div<{ $department: string }>`
   padding: 5px 9px;
   border-radius: 15px;
   background: ${(props) =>
@@ -50,7 +57,7 @@ const CardDepartment = styled.div<{ $department: string }>`
   color: white;
 `;
 
-const CardDate = styled.span`
+export const CardDate = styled.span`
   color: #212529;
   font-size: 12px;
   font-style: normal;
@@ -58,14 +65,14 @@ const CardDate = styled.span`
   line-height: normal;
 `;
 
-const TaskCardMiddle = styled.div`
+export const TaskCardMiddle = styled.div`
   display: flex;
   gap: 12px;
   flex-direction: column;
   padding-inline: 12px;
 `;
 
-const TaskName = styled.h2`
+export const TaskName = styled.h2`
   color: #212529;
   font-size: 15px;
   font-style: normal;
@@ -73,7 +80,7 @@ const TaskName = styled.h2`
   line-height: normal;
 `;
 
-const TaskDescr = styled.p`
+export const TaskDescr = styled.p`
   color: #343a40;
   font-size: 14px;
   font-style: normal;
@@ -81,74 +88,28 @@ const TaskDescr = styled.p`
   line-height: normal;
 `;
 
-const TaskCardBottom = styled.div`
+export const TaskCardBottom = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
 `;
 
-const TaskAuthorImg = styled.div`
+export const TaskAuthorImg = styled.div`
   width: 31px;
   height: 31px;
   border-radius: 31px;
 `;
 
-const TaskComments = styled.div`
+export const TaskComments = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
 `;
 
-const TaskCommentsQuantity = styled.span`
+export const TaskCommentsQuantity = styled.span`
   color: #212529;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
 `;
-
-export default function TaskCard({
-  priority,
-  department,
-  date,
-  name,
-  descr,
-  authorImg,
-  comments,
-  priorityIcon,
-}: {
-  priority: string;
-  department: string;
-  date: string;
-  name: string;
-  descr: string;
-  authorImg: string;
-  comments: number;
-  priorityIcon: string;
-}) {
-  return (
-    <TaskCardLayout>
-      <TaskCardUpper>
-        <CardPriority $priority={priority}>
-          <img src={priorityIcon} alt={priority} />
-          {priority}
-        </CardPriority>
-        <CardDepartment $department={department}>{department}</CardDepartment>
-        <CardDate>{date}</CardDate>
-      </TaskCardUpper>
-      <TaskCardMiddle>
-        <TaskName>{name}</TaskName>
-        <TaskDescr>{descr}</TaskDescr>
-      </TaskCardMiddle>
-      <TaskCardBottom>
-        <TaskAuthorImg>
-          <img src={authorImg} alt={name} />
-        </TaskAuthorImg>
-        <TaskComments>
-          <img src="./Comments.png" />
-          <TaskCommentsQuantity>{comments}</TaskCommentsQuantity>
-        </TaskComments>
-      </TaskCardBottom>
-    </TaskCardLayout>
-  );
-}
