@@ -9,7 +9,7 @@ export const FilterSelects = styled.div`
   margin-bottom: 79px;
 `;
 
-export const DepartmentSelectLayout = styled.div`
+export const SelectLayout = styled.div`
   position: relative;
   display: inline-block;
 `;
@@ -74,4 +74,17 @@ export const OptionChooseButton = styled.button`
   border: none;
   outline: none;
   align-self: flex-end;
+`;
+
+export const EmployeeAvatar = styled.img`
+  width: 28px;
+  height: 28px;
+  border-radius: 28px;
+  object-fit: cover;
+`;
+
+export const EmployeeAvatarAndName = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
 `;

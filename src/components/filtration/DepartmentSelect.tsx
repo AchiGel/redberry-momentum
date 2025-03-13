@@ -1,12 +1,12 @@
 import { Department } from "../../pages/Home";
 import { useState } from "react";
 import {
-  DepartmentSelectLayout,
   OptionChooseButton,
   OptionLabel,
   OptionLabelName,
   OptionsDropDown,
   OptionSelectButton,
+  SelectLayout,
 } from "./Filtration.styled";
 
 export default function DepartmentSelect({
@@ -34,7 +34,7 @@ export default function DepartmentSelect({
   };
 
   return (
-    <DepartmentSelectLayout>
+    <SelectLayout>
       <OptionSelectButton onClick={() => setIsOpen(!isOpen)}>
         დეპარტამენტი
       </OptionSelectButton>
@@ -55,6 +55,6 @@ export default function DepartmentSelect({
           <OptionChooseButton onClick={handleChoose}>არჩევა</OptionChooseButton>
         </OptionsDropDown>
       )}
-    </DepartmentSelectLayout>
+    </SelectLayout>
   );
 }
