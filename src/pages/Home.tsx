@@ -50,7 +50,26 @@ export default function Home() {
   const [selectedDepartments, setSelectedDepartments] = useState<number[]>([]);
   const [selectedPriority, setSelectedPriority] = useState<number[]>([]);
   const [selectedEmployee, setSelectedEmployee] = useState<number | null>(null);
+  //////////////////////////////////////////////////////
+  const [selectedFilters, setSelectedFilters] = useState<{
+    departments: number[];
+    priority: number[];
+    employee: number | null;
+  }>({
+    departments: [],
+    priority: [],
+    employee: null,
+  });
 
+  useEffect(() => {
+    setSelectedFilters({
+      departments: selectedDepartments,
+      priority: selectedPriority,
+      employee: selectedEmployee,
+    });
+  }, [selectedDepartments, selectedPriority, selectedEmployee]);
+
+  ///////////////////////////////////////////
   useEffect(() => {
     // ***************** ვტვირთავთ სერვერიდან წამოღებულ სტატუსებს *********************//
 
@@ -81,14 +100,16 @@ export default function Home() {
     <div>
       <FormTitle>დავალებების გვერდი</FormTitle>
       <Filtration
-        selectedDepartments={selectedDepartments}
         setSelectedDepartments={setSelectedDepartments}
-        selectedPriority={selectedPriority}
         setSelectedPriority={setSelectedPriority}
-        selectedEmployee={selectedEmployee}
         setSelectedEmployee={setSelectedEmployee}
       />
-      <FiltersSelected />
+      {selectedDepartments.length > 0 ||
+      selectedPriority.length > 0 ||
+      selectedEmployee ? (
+        <FiltersSelected selectedFilters={selectedFilters} />
+      ) : null}
+
       <Tasks statuses={statuses} tasks={tasks} />
     </div>
   );

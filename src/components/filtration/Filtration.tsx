@@ -11,18 +11,12 @@ import {
 import { Department, Employee, Priority } from "../../pages/Home";
 
 export default function Filtration({
-  selectedDepartments,
   setSelectedDepartments,
-  selectedPriority,
   setSelectedPriority,
-  selectedEmployee,
   setSelectedEmployee,
 }: {
-  selectedDepartments: number[];
   setSelectedDepartments: React.Dispatch<React.SetStateAction<number[]>>;
-  selectedPriority: number[];
   setSelectedPriority: React.Dispatch<React.SetStateAction<number[]>>;
-  selectedEmployee: number | null;
   setSelectedEmployee: React.Dispatch<React.SetStateAction<number | null>>;
 }) {
   const [departments, setDepartments] = useState<Department[]>([]);
@@ -80,21 +74,18 @@ export default function Filtration({
         departments={departments}
         depIsOpen={openDropdown === "department"}
         setDepIsOpen={() => toggleDropdown("department")}
-        selectedDepartments={selectedDepartments}
         setSelectedDepartments={setSelectedDepartments}
       />
       <PrioritySelect
         priorities={priorities}
         priIsOpen={openDropdown === "priority"}
         setPriIsOpen={() => toggleDropdown("priority")}
-        selectedPriority={selectedPriority}
         setSelectedPriority={setSelectedPriority}
       />
       <EmployeeSelect
         employees={employees}
         empIsOpen={openDropdown === "employee"}
         setEmpIsOpen={() => toggleDropdown("employee")}
-        selectedEmployee={selectedEmployee}
         setSelectedEmployee={setSelectedEmployee}
       />
     </FilterSelects>

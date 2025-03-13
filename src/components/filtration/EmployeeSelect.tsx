@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Employee } from "../../pages/Home";
 import {
   EmployeeAvatar,
@@ -14,25 +15,25 @@ export default function EmployeeSelect({
   employees,
   empIsOpen,
   setEmpIsOpen,
-  selectedEmployee,
   setSelectedEmployee,
 }: {
   employees: Employee[];
   empIsOpen: boolean;
   setEmpIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  selectedEmployee: number | null;
   setSelectedEmployee: React.Dispatch<React.SetStateAction<number | null>>;
 }) {
+  // ***************** თანამშრომლის არჩევის წინასწარ დამახსოვრების სთეითი *********************//
+  const [preSelectedEmp, setPreSelectedEmp] = useState<number | null>(null);
   // ***************** თანამშრომლის არჩევის ფუნქცია *********************//
 
   const handleSelect = (id: number) => {
-    setSelectedEmployee(id);
+    setPreSelectedEmp((prev) => (prev === id ? null : id));
   };
 
   // ***************** არჩევის დადასტურება *********************//
 
   const handleChoose = () => {
-    console.log("Selected Employee:", selectedEmployee);
+    setSelectedEmployee(preSelectedEmp);
     setEmpIsOpen(false);
   };
   return (
@@ -47,7 +48,7 @@ export default function EmployeeSelect({
             <OptionLabel key={emp.id}>
               <input
                 type="checkbox"
-                checked={selectedEmployee === emp.id}
+                checked={preSelectedEmp === emp.id}
                 onChange={() => handleSelect(emp.id)}
               />
               <EmployeeAvatarAndName>

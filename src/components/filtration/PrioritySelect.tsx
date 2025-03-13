@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Priority } from "../../pages/Home";
 import {
   OptionChooseButton,
@@ -12,19 +13,19 @@ export default function PrioritySelect({
   priorities,
   priIsOpen,
   setPriIsOpen,
-  selectedPriority,
   setSelectedPriority,
 }: {
   priorities: Priority[];
   priIsOpen: boolean;
   setPriIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  selectedPriority: number[];
   setSelectedPriority: React.Dispatch<React.SetStateAction<number[]>>;
 }) {
+  // ***************** პრიორიტეტების არჩევის წინასწარ დამახსოვრების სთეითი *********************//
+  const [preSelectedPris, setPreSelectedPris] = useState<number[]>([]);
   // ***************** პრიორიტეტების არჩევის ფუნქცია *********************//
 
   const handleCheckboxChange = (id: number) => {
-    setSelectedPriority((prev) =>
+    setPreSelectedPris((prev) =>
       prev.includes(id)
         ? prev.filter((priorId) => priorId !== id)
         : [...prev, id]
@@ -34,7 +35,7 @@ export default function PrioritySelect({
   // ***************** არჩევის დადასტურება *********************//
 
   const handleChoose = () => {
-    console.log("Selected Priorities:", selectedPriority);
+    setSelectedPriority(preSelectedPris);
     setPriIsOpen(false);
   };
 
@@ -50,7 +51,7 @@ export default function PrioritySelect({
             <OptionLabel key={prior.id}>
               <input
                 type="checkbox"
-                checked={selectedPriority.includes(prior.id)}
+                checked={preSelectedPris.includes(prior.id)}
                 onChange={() => handleCheckboxChange(prior.id)}
               />
               <OptionLabelName>{prior.name}</OptionLabelName>

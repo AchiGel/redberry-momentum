@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Department } from "../../pages/Home";
 import {
   OptionChooseButton,
@@ -12,19 +13,20 @@ export default function DepartmentSelect({
   departments,
   depIsOpen,
   setDepIsOpen,
-  selectedDepartments,
   setSelectedDepartments,
 }: {
   departments: Department[];
   depIsOpen: boolean;
   setDepIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  selectedDepartments: number[];
   setSelectedDepartments: React.Dispatch<React.SetStateAction<number[]>>;
 }) {
+  // ***************** დეპარტამენტების არჩევის წინასწარ დამახსოვრების სთეითი *********************//
+  const [preSelectedDeps, setPreSelectedDeps] = useState<number[]>([]);
+
   // ***************** დეპარტამენტების არჩევის ფუნქცია *********************//
 
   const handleCheckboxChange = (id: number) => {
-    setSelectedDepartments((prev) =>
+    setPreSelectedDeps((prev) =>
       prev.includes(id) ? prev.filter((deptId) => deptId !== id) : [...prev, id]
     );
   };
@@ -32,7 +34,7 @@ export default function DepartmentSelect({
   // ***************** არჩევის დადასტურება *********************//
 
   const handleChoose = () => {
-    console.log("Selected Departments:", selectedDepartments);
+    setSelectedDepartments(preSelectedDeps);
     setDepIsOpen(false);
   };
 
@@ -48,7 +50,7 @@ export default function DepartmentSelect({
             <OptionLabel key={dept.id}>
               <input
                 type="checkbox"
-                checked={selectedDepartments.includes(dept.id)}
+                checked={preSelectedDeps.includes(dept.id)}
                 onChange={() => handleCheckboxChange(dept.id)}
               />
               <OptionLabelName>{dept.name}</OptionLabelName>
