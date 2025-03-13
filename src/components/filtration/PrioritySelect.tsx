@@ -11,11 +11,17 @@ import {
 
 export default function PrioritySelect({
   priorities,
+  priIsOpen,
+  setPriIsOpen,
 }: {
   priorities: Priority[];
+  priIsOpen: boolean;
+  setPriIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  // ***************** ამორჩეული პრიორიტეტების სთეითი *********************//
   const [selectedPriority, setSelectedPriority] = useState<number[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
+
+  // ***************** პრიორიტეტების არჩევის ფუნქცია *********************//
 
   const handleCheckboxChange = (id: number) => {
     setSelectedPriority((prev) =>
@@ -25,18 +31,20 @@ export default function PrioritySelect({
     );
   };
 
+  // ***************** არჩევის დადასტურება *********************//
+
   const handleChoose = () => {
     console.log("Selected Priorities:", selectedPriority);
-    setIsOpen(false);
+    setPriIsOpen(false);
   };
 
   return (
     <SelectLayout>
-      <OptionSelectButton onClick={() => setIsOpen(!isOpen)}>
+      <OptionSelectButton onClick={() => setPriIsOpen(!priIsOpen)}>
         პრიორიტეტი
       </OptionSelectButton>
 
-      {isOpen && (
+      {priIsOpen && (
         <OptionsDropDown>
           {priorities.map((prior) => (
             <OptionLabel key={prior.id}>

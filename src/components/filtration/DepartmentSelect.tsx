@@ -11,12 +11,15 @@ import {
 
 export default function DepartmentSelect({
   departments,
+  depIsOpen,
+  setDepIsOpen,
 }: {
   departments: Department[];
+  depIsOpen: boolean;
+  setDepIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  // ***************** ამორჩეული დეპარტამენტები და დროფდაუნის ჩამოშლა *********************//
+  // ***************** ამორჩეული დეპარტამენტების სთეითი *********************//
   const [selectedDepartments, setSelectedDepartments] = useState<number[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
 
   // ***************** დეპარტამენტების არჩევის ფუნქცია *********************//
 
@@ -30,16 +33,16 @@ export default function DepartmentSelect({
 
   const handleChoose = () => {
     console.log("Selected Departments:", selectedDepartments);
-    setIsOpen(false);
+    setDepIsOpen(false);
   };
 
   return (
     <SelectLayout>
-      <OptionSelectButton onClick={() => setIsOpen(!isOpen)}>
+      <OptionSelectButton onClick={() => setDepIsOpen(!depIsOpen)}>
         დეპარტამენტი
       </OptionSelectButton>
 
-      {isOpen && (
+      {depIsOpen && (
         <OptionsDropDown>
           {departments.map((dept) => (
             <OptionLabel key={dept.id}>

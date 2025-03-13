@@ -13,38 +13,42 @@ import {
 
 export default function EmployeeSelect({
   employees,
+  empIsOpen,
+  setEmpIsOpen,
 }: {
   employees: Employee[];
+  empIsOpen: boolean;
+  setEmpIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const [selectedEmployee, setSelectedEmployee] = useState<number[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
+  // ***************** ამორჩეული თანამშრომლის სთეითი *********************//
+  const [selectedEmployee, setSelectedEmployee] = useState<number | null>(null);
 
-  const handleCheckboxChange = (id: number) => {
-    setSelectedEmployee((prev) =>
-      prev.includes(id)
-        ? prev.filter((priorId) => priorId !== id)
-        : [...prev, id]
-    );
+  // ***************** თანამშრომლის არჩევის ფუნქცია *********************//
+
+  const handleSelect = (id: number) => {
+    setSelectedEmployee(id);
   };
+
+  // ***************** არჩევის დადასტურება *********************//
 
   const handleChoose = () => {
     console.log("Selected Employee:", selectedEmployee);
-    setIsOpen(false);
+    setEmpIsOpen(false);
   };
   return (
     <SelectLayout>
-      <OptionSelectButton onClick={() => setIsOpen(!isOpen)}>
+      <OptionSelectButton onClick={() => setEmpIsOpen(!empIsOpen)}>
         თანამშრომელი
       </OptionSelectButton>
 
-      {isOpen && (
+      {empIsOpen && (
         <OptionsDropDown>
           {employees.map((emp) => (
             <OptionLabel key={emp.id}>
               <input
                 type="checkbox"
-                checked={selectedEmployee.includes(emp.id)}
-                onChange={() => handleCheckboxChange(emp.id)}
+                checked={selectedEmployee === emp.id}
+                onChange={() => handleSelect(emp.id)}
               />
               <EmployeeAvatarAndName>
                 <EmployeeAvatar src={emp.avatar} alt={emp.name + "image"} />

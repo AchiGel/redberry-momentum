@@ -15,6 +15,10 @@ export default function Filtration() {
   const [priorities, setPriorities] = useState<Priority[]>([]);
   const [employees, setEmployees] = useState<Employee[]>([]);
 
+  const [openDropdown, setOpenDropdown] = useState<
+    "department" | "priority" | "employee" | null
+  >(null);
+
   useEffect(() => {
     // ***************** ვტვირთავთ სერვერიდან წამოღებულ დეპარტამენტებს *********************//
     const loadDepartments = async () => {
@@ -50,11 +54,29 @@ export default function Filtration() {
     loadEmployees();
   }, []);
 
+  // ***************** ფუნქცია დროფდაუნების რიგ-რიგობით გასახსნელად *********************//
+
+  const toggleDropdown = (dropdown: "department" | "priority" | "employee") => {
+    setOpenDropdown((prev) => (prev === dropdown ? null : dropdown));
+  };
+
   return (
     <FilterSelects>
-      <DepartmentSelect departments={departments} />
-      <PrioritySelect priorities={priorities} />
-      <EmployeeSelect employees={employees} />
+      <DepartmentSelect
+        departments={departments}
+        depIsOpen={openDropdown === "department"}
+        setDepIsOpen={() => toggleDropdown("department")}
+      />
+      <PrioritySelect
+        priorities={priorities}
+        priIsOpen={openDropdown === "priority"}
+        setPriIsOpen={() => toggleDropdown("priority")}
+      />
+      <EmployeeSelect
+        employees={employees}
+        empIsOpen={openDropdown === "employee"}
+        setEmpIsOpen={() => toggleDropdown("employee")}
+      />
     </FilterSelects>
   );
 }
