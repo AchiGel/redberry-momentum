@@ -88,3 +88,41 @@ export const EmployeeAvatarAndName = styled.div`
   align-items: center;
   gap: 10px;
 `;
+
+export const FiltersSelectedLayout = styled.div`
+  margin-bottom: 24px;
+  margin-top: -53px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+export const FilterSelected = styled.div`
+  display: flex;
+  padding: 6px 10px;
+  align-items: center;
+  gap: 4px;
+  border-radius: 43px;
+  border: 1px solid #ced4da;
+  background: #fff;
+  color: #343a40;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`;
+
+export const SelectedFiltersClear = styled.button`
+  border-radius: 43px;
+  background: #fff;
+  padding: 6px 10px;
+  border: none;
+  outline: none;
+  color: #343a40;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`;

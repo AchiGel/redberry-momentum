@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Priority } from "../../pages/Home";
 import {
   OptionChooseButton,
@@ -13,14 +12,15 @@ export default function PrioritySelect({
   priorities,
   priIsOpen,
   setPriIsOpen,
+  selectedPriority,
+  setSelectedPriority,
 }: {
   priorities: Priority[];
   priIsOpen: boolean;
   setPriIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedPriority: number[];
+  setSelectedPriority: React.Dispatch<React.SetStateAction<number[]>>;
 }) {
-  // ***************** ამორჩეული პრიორიტეტების სთეითი *********************//
-  const [selectedPriority, setSelectedPriority] = useState<number[]>([]);
-
   // ***************** პრიორიტეტების არჩევის ფუნქცია *********************//
 
   const handleCheckboxChange = (id: number) => {

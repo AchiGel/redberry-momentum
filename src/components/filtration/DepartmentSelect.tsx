@@ -1,5 +1,4 @@
 import { Department } from "../../pages/Home";
-import { useState } from "react";
 import {
   OptionChooseButton,
   OptionLabel,
@@ -13,14 +12,15 @@ export default function DepartmentSelect({
   departments,
   depIsOpen,
   setDepIsOpen,
+  selectedDepartments,
+  setSelectedDepartments,
 }: {
   departments: Department[];
   depIsOpen: boolean;
   setDepIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  selectedDepartments: number[];
+  setSelectedDepartments: React.Dispatch<React.SetStateAction<number[]>>;
 }) {
-  // ***************** ამორჩეული დეპარტამენტების სთეითი *********************//
-  const [selectedDepartments, setSelectedDepartments] = useState<number[]>([]);
-
   // ***************** დეპარტამენტების არჩევის ფუნქცია *********************//
 
   const handleCheckboxChange = (id: number) => {

@@ -3,6 +3,7 @@ import Filtration from "../components/filtration/Filtration";
 import { getAllStatuses, getAllTasks } from "../services/api";
 import { FormTitle } from "./CreateTaskPage";
 import Tasks from "../components/tasks/Tasks";
+import FiltersSelected from "../components/filtration/FiltersSelected";
 
 export interface Status {
   id: number;
@@ -44,6 +45,12 @@ export default function Home() {
   const [statuses, setStatuses] = useState<Status[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
 
+  // ***************** ამორჩეული დეპარტამენტის, პრიორიტეტის და თანამშრომლის სთეითები *********************//
+
+  const [selectedDepartments, setSelectedDepartments] = useState<number[]>([]);
+  const [selectedPriority, setSelectedPriority] = useState<number[]>([]);
+  const [selectedEmployee, setSelectedEmployee] = useState<number | null>(null);
+
   useEffect(() => {
     // ***************** ვტვირთავთ სერვერიდან წამოღებულ სტატუსებს *********************//
 
@@ -73,7 +80,15 @@ export default function Home() {
   return (
     <div>
       <FormTitle>დავალებების გვერდი</FormTitle>
-      <Filtration />
+      <Filtration
+        selectedDepartments={selectedDepartments}
+        setSelectedDepartments={setSelectedDepartments}
+        selectedPriority={selectedPriority}
+        setSelectedPriority={setSelectedPriority}
+        selectedEmployee={selectedEmployee}
+        setSelectedEmployee={setSelectedEmployee}
+      />
+      <FiltersSelected />
       <Tasks statuses={statuses} tasks={tasks} />
     </div>
   );
