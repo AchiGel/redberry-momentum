@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 
 const AgentModalOverlay = styled.div<{ $isopen: boolean }>`
@@ -133,6 +134,19 @@ export default function CreateAgentModal({
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  // ***************** ვაუქმებთ ვერტიკალურ სქროლს მოდალის გახსნაზე *********************//
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   return (
     <AgentModalOverlay onClick={() => setIsOpen(!isOpen)} $isopen={isOpen}>
       <AgentModal onClick={(e) => e.stopPropagation()}>
