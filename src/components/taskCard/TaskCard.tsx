@@ -23,6 +23,7 @@ interface TaskCardTypes {
   authorImg: string;
   comments: number;
   priorityIcon: string;
+  layoutColor: number;
 }
 
 export default function TaskCard({
@@ -34,6 +35,7 @@ export default function TaskCard({
   authorImg,
   comments,
   priorityIcon,
+  layoutColor,
 }: TaskCardTypes) {
   // ***************** თარიღის ფორმატირება *********************//
   const preDate = new Date(date);
@@ -44,7 +46,7 @@ export default function TaskCard({
   });
 
   return (
-    <TaskCardLayout>
+    <TaskCardLayout $layoutColor={layoutColor}>
       <TaskCardUpper>
         <CardPriorityAndDepartment>
           <CardPriority $priority={priority}>
@@ -63,7 +65,7 @@ export default function TaskCard({
       </TaskCardMiddle>
       <TaskCardBottom>
         <TaskAuthorImg>
-          <img src={authorImg} alt={name} />
+          <img src={authorImg} alt="Author Image" />
         </TaskAuthorImg>
         <TaskComments>
           <img src="./Comments.png" />

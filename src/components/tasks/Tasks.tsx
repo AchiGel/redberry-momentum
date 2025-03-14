@@ -56,6 +56,7 @@ export default function Tasks({
                 authorImg={task.employee.avatar}
                 comments={task.total_comments}
                 priorityIcon={task.priority.icon}
+                layoutColor={el.id}
               />
             ))}
           </TasksColumn>

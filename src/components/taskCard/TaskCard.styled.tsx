@@ -1,8 +1,16 @@
 import styled from "styled-components";
 
-export const TaskCardLayout = styled.div`
+export const TaskCardLayout = styled.div<{ $layoutColor: number }>`
   border-radius: 15px;
-  border: 1px solid #f7bc30;
+  border: 1px solid
+    ${(props) =>
+      props.$layoutColor === 1
+        ? "#F7BC30"
+        : props.$layoutColor === 2
+        ? "#FB5607"
+        : props.$layoutColor === 3
+        ? "#FF006E"
+        : "#3A86FF"};
   background: #fff;
   padding: 20px;
   display: flex;
@@ -49,11 +57,19 @@ export const CardDepartment = styled.div<{ $department: string }>`
   padding: 5px 9px;
   border-radius: 15px;
   background: ${(props) =>
-    props.$department === "დიზაინი"
-      ? "#FF66A8"
+    props.$department === "ტექნოლოგიების დეპარტამენტი"
+      ? "#FFD86D"
+      : props.$department === "ლოჯისტიკის დეპარტამენტი"
+      ? "#89B6FF"
       : props.$department === "გაყიდვები და მარკეტინგის დეპარტამენტი"
-      ? "##FD9A6A"
-      : "#FA4D4D"};
+      ? "#FD9A6A"
+      : props.$department === "მედიის დეპარტამენტი"
+      ? "#FF66A8"
+      : props.$department === "ფინანსების დეპარტამენტი"
+      ? "#fdfb6c"
+      : props.$department === "ადამიანური რესურსების დეპარტამენტი"
+      ? "#6a8cfd"
+      : "#204f7e"};
   color: white;
 `;
 
