@@ -16,6 +16,7 @@ export const TaskCardLayout = styled.div<{ $layoutColor: number }>`
   display: flex;
   flex-direction: column;
   gap: 28px;
+  min-height: 217px;
 `;
 
 export const TaskCardUpper = styled.div`
@@ -51,8 +52,6 @@ export const CardPriority = styled.div<{ $priority: string }>`
   gap: 4px;
 `;
 
-// ***************** დეპარტამენტების ამბავი დასადგენია?????? *********************//
-
 export const CardDepartment = styled.div<{ $department: string }>`
   padding: 5px 9px;
   border-radius: 15px;
@@ -86,6 +85,7 @@ export const TaskCardMiddle = styled.div`
   gap: 12px;
   flex-direction: column;
   padding-inline: 12px;
+  overflow: hidden;
 `;
 
 export const TaskName = styled.h2`
@@ -114,6 +114,7 @@ export const TaskAuthorImg = styled.div`
   width: 31px;
   height: 31px;
   border-radius: 31px;
+  overflow: hidden;
 `;
 
 export const TaskComments = styled.div`

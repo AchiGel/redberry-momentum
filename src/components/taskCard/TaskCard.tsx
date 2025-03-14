@@ -61,11 +61,17 @@ export default function TaskCard({
       </TaskCardUpper>
       <TaskCardMiddle>
         <TaskName>{name}</TaskName>
-        <TaskDescr>{descr}</TaskDescr>
+        <TaskDescr>
+          {descr.length > 100 ? descr.slice(0, 100) + "..." : descr}
+        </TaskDescr>
       </TaskCardMiddle>
       <TaskCardBottom>
         <TaskAuthorImg>
-          <img src={authorImg} alt="Author Image" />
+          <img
+            style={{ width: "100%", objectFit: "cover" }}
+            src={authorImg}
+            alt="Author Image"
+          />
         </TaskAuthorImg>
         <TaskComments>
           <img src="./Comments.png" />

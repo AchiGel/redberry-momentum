@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const TasksGrid = styled.div`
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: repeat(4, 22.6%);
   gap: 52px;
   margin-bottom: 152px;
 `;
