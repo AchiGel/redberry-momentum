@@ -1,66 +1,28 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DepartmentSelect from "./DepartmentSelect";
 import EmployeeSelect from "./EmployeeSelect";
 import { FilterSelects } from "./Filtration.styled";
 import PrioritySelect from "./PrioritySelect";
-import {
-  getAllDepartments,
-  getAllEmployees,
-  getAllPriorities,
-} from "../../services/api";
-import { Department, Employee, Priority } from "../../pages/Home";
+import { Department, Employee, Priority } from "../../pages/Home/Home";
 
 export default function Filtration({
   setSelectedDepartments,
   setSelectedPriority,
   setSelectedEmployee,
+  departments,
+  priorities,
+  employees,
 }: {
   setSelectedDepartments: React.Dispatch<React.SetStateAction<number[]>>;
   setSelectedPriority: React.Dispatch<React.SetStateAction<number[]>>;
   setSelectedEmployee: React.Dispatch<React.SetStateAction<number | null>>;
+  departments: Department[];
+  priorities: Priority[];
+  employees: Employee[];
 }) {
-  const [departments, setDepartments] = useState<Department[]>([]);
-  const [priorities, setPriorities] = useState<Priority[]>([]);
-  const [employees, setEmployees] = useState<Employee[]>([]);
-
   const [openDropdown, setOpenDropdown] = useState<
     "department" | "priority" | "employee" | null
   >(null);
-
-  useEffect(() => {
-    // ***************** ვტვირთავთ სერვერიდან წამოღებულ დეპარტამენტებს *********************//
-    const loadDepartments = async () => {
-      try {
-        const departments = await getAllDepartments();
-        setDepartments(departments);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    loadDepartments();
-
-    // ***************** ვტვირთავთ სერვერიდან წამოღებულ პრიორიტეტებს *********************//
-    const loadPriorities = async () => {
-      try {
-        const priorities = await getAllPriorities();
-        setPriorities(priorities);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    loadPriorities();
-
-    // ***************** ვტვირთავთ სერვერიდან წამოღებულ თანამშრომლებს *********************//
-    const loadEmployees = async () => {
-      try {
-        const employees = await getAllEmployees();
-        setEmployees(employees);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    loadEmployees();
-  }, []);
 
   // ***************** ფუნქცია დროფდაუნების რიგ-რიგობით გასახსნელად *********************//
 

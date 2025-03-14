@@ -1,65 +1,27 @@
 import { useEffect, useState } from "react";
 import {
-  getAllDepartments,
-  getAllEmployees,
-  getAllPriorities,
-} from "../../services/api";
-import {
   FilterSelected,
   FiltersSelectedLayout,
   SelectedFiltersClear,
 } from "./Filtration.styled";
-import { Department, Employee, Priority } from "../../pages/Home";
+import { Department, Employee, Priority } from "../../pages/Home/Home";
 
 export default function FiltersSelected({
   selectedFilters,
+  departments,
+  priorities,
+  employees,
 }: {
   selectedFilters: {
     departments: number[];
     priority: number[];
     employee: number | null;
   };
+  departments: Department[];
+  priorities: Priority[];
+  employees: Employee[];
 }) {
-  const [departments, setDepartments] = useState<Department[]>([]);
-  const [priorities, setPriorities] = useState<Priority[]>([]);
-  const [employees, setEmployees] = useState<Employee[]>([]);
-
   const [allFilters, setAllFilters] = useState<string[]>([]);
-
-  useEffect(() => {
-    // ***************** ვტვირთავთ სერვერიდან წამოღებულ დეპარტამენტებს *********************//
-    const loadDepartments = async () => {
-      try {
-        const departments = await getAllDepartments();
-        setDepartments(departments);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    loadDepartments();
-
-    // ***************** ვტვირთავთ სერვერიდან წამოღებულ პრიორიტეტებს *********************//
-    const loadPriorities = async () => {
-      try {
-        const priorities = await getAllPriorities();
-        setPriorities(priorities);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    loadPriorities();
-
-    // ***************** ვტვირთავთ სერვერიდან წამოღებულ თანამშრომლებს *********************//
-    const loadEmployees = async () => {
-      try {
-        const employees = await getAllEmployees();
-        setEmployees(employees);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    loadEmployees();
-  }, [selectedFilters]);
 
   // ***************** ვაახლებთ ყველა მონიშნული ფილტრის სთეითს *********************//
 

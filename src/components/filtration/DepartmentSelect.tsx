@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Department } from "../../pages/Home";
+import { Department } from "../../pages/Home/Home";
 import {
   OptionChooseButton,
   OptionLabel,

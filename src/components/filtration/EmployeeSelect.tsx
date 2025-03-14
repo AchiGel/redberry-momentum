@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Employee } from "../../pages/Home";
+import { Employee } from "../../pages/Home/Home";
 import {
   EmployeeAvatar,
   EmployeeAvatarAndName,

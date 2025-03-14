@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Priority } from "../../pages/Home";
+import { Priority } from "../../pages/Home/Home";
 import {
   OptionChooseButton,
   OptionLabel,

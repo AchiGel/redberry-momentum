@@ -8,9 +8,9 @@ import {
   Route,
   RouterProvider,
 } from "react-router";
-import Home from "./pages/Home.tsx";
-import CreateTaskPage from "./pages/CreateTaskPage.tsx";
-import TaskInnerPage from "./pages/TaskInnerPage.tsx";
+import Home from "./pages/Home/Home.tsx";
+import CreateTaskPage from "./pages/CreateTaskPage/CreateTaskPage.tsx";
+import TaskInnerPage from "./pages/TaskInnerPage/TaskInnerPage.tsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(

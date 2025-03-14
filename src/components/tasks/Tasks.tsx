@@ -1,4 +1,4 @@
-import { Status, Task } from "../../pages/Home";
+import { Status, Task } from "../../pages/Home/Home";
 import TaskCard from "../taskCard/TaskCard";
 import { TasksGrid, TasksColumn, TaskStatus } from "./Tasks.styled";
 

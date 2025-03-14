@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const AgentModalOverlay = styled.div<{ $isopen: boolean }>`
   position: absolute;
+  z-index: 10000;
   top: 0;
   left: -120px;
   height: 100vh;

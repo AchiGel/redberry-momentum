@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
-import Filtration from "../components/filtration/Filtration";
-import { getAllStatuses, getAllTasks } from "../services/api";
-import { FormTitle } from "./CreateTaskPage";
-import Tasks from "../components/tasks/Tasks";
-import FiltersSelected from "../components/filtration/FiltersSelected";
+import Filtration from "../../components/filtration/Filtration";
+import {
+  getAllDepartments,
+  getAllEmployees,
+  getAllPriorities,
+  getAllStatuses,
+  getAllTasks,
+} from "../../services/api";
+import Tasks from "../../components/tasks/Tasks";
+import FiltersSelected from "../../components/filtration/FiltersSelected";
+import { FormTitle } from "../CreateTaskPage/CreateTaskPage.styled";
 
 export interface Status {
   id: number;
@@ -44,6 +50,9 @@ export interface Task {
 export default function Home() {
   const [statuses, setStatuses] = useState<Status[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [departments, setDepartments] = useState<Department[]>([]);
+  const [priorities, setPriorities] = useState<Priority[]>([]);
+  const [employees, setEmployees] = useState<Employee[]>([]);
 
   // ***************** ამორჩეული დეპარტამენტის, პრიორიტეტის და თანამშრომლის სთეითები *********************//
 
@@ -94,6 +103,38 @@ export default function Home() {
       }
     }
     loadTasks();
+    // ***************** ვტვირთავთ სერვერიდან წამოღებულ დეპარტამენტებს *********************//
+    const loadDepartments = async () => {
+      try {
+        const departments = await getAllDepartments();
+        setDepartments(departments);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    loadDepartments();
+
+    // ***************** ვტვირთავთ სერვერიდან წამოღებულ პრიორიტეტებს *********************//
+    const loadPriorities = async () => {
+      try {
+        const priorities = await getAllPriorities();
+        setPriorities(priorities);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    loadPriorities();
+
+    // ***************** ვტვირთავთ სერვერიდან წამოღებულ თანამშრომლებს *********************//
+    const loadEmployees = async () => {
+      try {
+        const employees = await getAllEmployees();
+        setEmployees(employees);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    loadEmployees();
   }, []);
 
   return (
@@ -103,11 +144,19 @@ export default function Home() {
         setSelectedDepartments={setSelectedDepartments}
         setSelectedPriority={setSelectedPriority}
         setSelectedEmployee={setSelectedEmployee}
+        departments={departments}
+        priorities={priorities}
+        employees={employees}
       />
       {selectedDepartments.length > 0 ||
       selectedPriority.length > 0 ||
       selectedEmployee ? (
-        <FiltersSelected selectedFilters={selectedFilters} />
+        <FiltersSelected
+          departments={departments}
+          priorities={priorities}
+          employees={employees}
+          selectedFilters={selectedFilters}
+        />
       ) : null}
 
       <Tasks statuses={statuses} tasks={tasks} />
