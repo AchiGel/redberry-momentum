@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   FilterSelected,
+  FilterSelectedRemoveButton,
   FiltersSelectedLayout,
   SelectedFiltersClear,
 } from "./Filtration.styled";
@@ -8,6 +9,10 @@ import { Department, Employee, Priority } from "../../pages/Home/Home";
 
 export default function FiltersSelected({
   selectedFilters,
+  setSelectedFilters,
+  setSelectedDepartments,
+  setSelectedPriority,
+  setSelectedEmployee,
   departments,
   priorities,
   employees,
@@ -17,6 +22,16 @@ export default function FiltersSelected({
     priority: number[];
     employee: number | null;
   };
+  setSelectedFilters: React.Dispatch<
+    React.SetStateAction<{
+      departments: number[];
+      priority: number[];
+      employee: number | null;
+    }>
+  >;
+  setSelectedDepartments: React.Dispatch<React.SetStateAction<number[]>>;
+  setSelectedPriority: React.Dispatch<React.SetStateAction<number[]>>;
+  setSelectedEmployee: React.Dispatch<React.SetStateAction<number | null>>;
   departments: Department[];
   priorities: Priority[];
   employees: Employee[];
@@ -56,12 +71,76 @@ export default function FiltersSelected({
     setAllFilters(filters);
   }, [selectedFilters, departments, priorities, employees]);
 
+  // ***************** ეს ფუნქცია შლის თითოეულ ფილტრს სათითაოდ,
+  // რისთვისაც საჭიროა ფილტრის კონტენტის საფუძველზე იმის დადგენა,
+  // დეპარტამენტია ეს, პრიორიტეტი თუ თანამშრომელი *********************//
+
+  const handleFilterRemove = (filterName: string) => {
+    // ***************** დეპარტამენტების შემოწმება *********************//
+    const departmentToRemove = departments.find(
+      (dep) => dep.name === filterName
+    );
+    if (departmentToRemove) {
+      setSelectedFilters((prev) => ({
+        ...prev,
+        departments: prev.departments.filter(
+          (id) => id !== departmentToRemove.id
+        ),
+      }));
+      setSelectedDepartments((prev) =>
+        prev.filter((id) => id !== departmentToRemove.id)
+      );
+      return;
+    }
+
+    // ***************** პრიორიტეტების შემოწმება *********************//
+    const priorityToRemove = priorities.find((pri) => pri.name === filterName);
+    if (priorityToRemove) {
+      setSelectedFilters((prev) => ({
+        ...prev,
+        priority: prev.priority.filter((id) => id !== priorityToRemove.id),
+      }));
+      setSelectedPriority((prev) =>
+        prev.filter((id) => id !== priorityToRemove.id)
+      );
+      return;
+    }
+
+    // ***************** თანამშრომლების შემოწმება *********************//
+    const employeeToRemove = employees.find(
+      (emp) => `${emp.name} ${emp.surname}` === filterName
+    );
+    if (employeeToRemove) {
+      setSelectedFilters((prev) => ({
+        ...prev,
+        employee: null,
+      }));
+      setSelectedEmployee(null);
+    }
+  };
+
   return (
     <FiltersSelectedLayout>
       {allFilters.map((f) => (
-        <FilterSelected key={f}>{f}</FilterSelected>
+        <FilterSelected key={f}>
+          {f}
+          <FilterSelectedRemoveButton onClick={() => handleFilterRemove(f)} />
+        </FilterSelected>
       ))}
-      <SelectedFiltersClear>გასუფთავება</SelectedFiltersClear>
+      <SelectedFiltersClear
+        onClick={() => {
+          setSelectedFilters({
+            departments: [],
+            priority: [],
+            employee: null,
+          });
+          setSelectedDepartments([]);
+          setSelectedPriority([]);
+          setSelectedEmployee(null);
+        }}
+      >
+        გასუფთავება
+      </SelectedFiltersClear>
     </FiltersSelectedLayout>
   );
 }

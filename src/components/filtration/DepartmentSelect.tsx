@@ -35,6 +35,7 @@ export default function DepartmentSelect({
 
   const handleChoose = () => {
     setSelectedDepartments(preSelectedDeps);
+    setPreSelectedDeps([]);
     setDepIsOpen(false);
   };
 

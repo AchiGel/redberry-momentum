@@ -148,18 +148,26 @@ export default function Home() {
         priorities={priorities}
         employees={employees}
       />
-      {selectedDepartments.length > 0 ||
-      selectedPriority.length > 0 ||
-      selectedEmployee ? (
+      {selectedFilters.departments.length > 0 ||
+      selectedFilters.priority.length > 0 ||
+      selectedFilters.employee ? (
         <FiltersSelected
           departments={departments}
           priorities={priorities}
           employees={employees}
           selectedFilters={selectedFilters}
+          setSelectedFilters={setSelectedFilters}
+          setSelectedDepartments={setSelectedDepartments}
+          setSelectedPriority={setSelectedPriority}
+          setSelectedEmployee={setSelectedEmployee}
         />
       ) : null}
 
-      <Tasks statuses={statuses} tasks={tasks} />
+      <Tasks
+        statuses={statuses}
+        tasks={tasks}
+        selectedFilters={selectedFilters}
+      />
     </div>
   );
 }

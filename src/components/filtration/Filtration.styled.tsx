@@ -113,6 +113,18 @@ export const FilterSelected = styled.div`
   line-height: normal;
 `;
 
+export const FilterSelectedRemoveButton = styled.button`
+  background-image: url("/x.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 14px;
+  width: 14px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+`;
+
 export const SelectedFiltersClear = styled.button`
   border-radius: 43px;
   background: #fff;

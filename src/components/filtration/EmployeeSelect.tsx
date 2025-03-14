@@ -34,6 +34,7 @@ export default function EmployeeSelect({
 
   const handleChoose = () => {
     setSelectedEmployee(preSelectedEmp);
+    setPreSelectedEmp(null);
     setEmpIsOpen(false);
   };
   return (

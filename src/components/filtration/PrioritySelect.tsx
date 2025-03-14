@@ -36,6 +36,7 @@ export default function PrioritySelect({
 
   const handleChoose = () => {
     setSelectedPriority(preSelectedPris);
+    setPreSelectedPris([]);
     setPriIsOpen(false);
   };
 
