@@ -26,6 +26,22 @@
   font-family: "FiraGo";
   src: url("/fonts/FiraGO-Medium.woff2") format("woff2"),
     url("/fonts/FiraGO-Medium.woff") format("woff");
+  font-weight: 350;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "FiraGo";
+  src: url("/fonts/FiraGO-Light.woff2") format("woff2"),
+    url("/fonts/FiraGO-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "FiraGo";
+  src: url("/fonts/FiraGO-Book.woff2") format("woff2"),
+    url("/fonts/FiraGO-Book.woff") format("woff");
   font-weight: 500;
   font-style: normal;
 }
