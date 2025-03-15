@@ -39,6 +39,7 @@ export default function EmployeeSelect({
   return (
     <SelectContainer>
       <SelectButton
+        type="button"
         disabled={isDisabled}
         $isDisabled={isDisabled}
         $isOpen={isOpen}

@@ -21,30 +21,10 @@ import {
   getAllStatuses,
 } from "../../services/api";
 import { Status, Department, Priority, Employee } from "../Home/Home";
-// import styled from "styled-components";
 import StatusesSelect from "../../components/createTaskPageComponent/StatusesSelect";
 import PrioritySelect from "../../components/createTaskPageComponent/PrioritySelect";
 import DepartmentSelect from "../../components/createTaskPageComponent/DepartmentSelect";
 import EmployeeSelect from "../../components/createTaskPageComponent/EmployeeSelect";
-
-// const CustomSelect = styled.select`
-//   width: 100%;
-//   padding: 14px;
-//   background: white;
-//   border-radius: 5px;
-//   border: 1px solid #dee2e6;
-//   color: #0d0f10;
-//   font-size: 14px;
-//   font-style: normal;
-//   font-weight: 300;
-//   line-height: normal;
-//   cursor: pointer;
-//   &:focus {
-//     border-color: #007bff;
-//     outline: none;
-//     box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
-//   }
-// `;
 
 export default function CreateTaskPage() {
   const [name, setName] = useState<string>("");
@@ -63,6 +43,7 @@ export default function CreateTaskPage() {
     "ადმინისტრაციის დეპარტამენტი"
   );
   const [selectedEmployee, setSelectedEmployee] = useState<Employee>();
+  const [selectedDate, setSelectedDate] = useState("");
 
   useEffect(() => {
     // ***************** ვტვირთავთ სერვერიდან წამოღებულ სტატუსებს *********************//
@@ -118,9 +99,6 @@ export default function CreateTaskPage() {
     const selectedPriorityObj = priorities.find(
       (p) => p.name === selectedPriority
     );
-    const selectedDepartmentObj = departments.find(
-      (d) => d.name === selectedDepartment
-    );
     const selectedEmployeeObj = employees.find(
       (e) => e.name === selectedEmployee?.name
     );
@@ -132,10 +110,9 @@ export default function CreateTaskPage() {
       formData.append("status_id", selectedStatusObj.id.toString());
     if (selectedPriorityObj)
       formData.append("priority_id", selectedPriorityObj.id.toString());
-    if (selectedDepartmentObj)
-      formData.append("department_id", selectedDepartmentObj.id.toString());
     if (selectedEmployeeObj)
       formData.append("employee_id", selectedEmployeeObj.id.toString());
+    if (selectedDate) formData.append("due_date", selectedDate);
 
     console.log("Form Data:", Object.fromEntries(formData.entries()));
   };
@@ -218,7 +195,13 @@ export default function CreateTaskPage() {
               </InputWrapper>
               <InputWrapper>
                 <FormLabel htmlFor="date">დედლაინი</FormLabel>
-                <input type="date" name="date" id="date" />
+                <input
+                  type="date"
+                  name="date"
+                  id="date"
+                  value={selectedDate}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                />
               </InputWrapper>
             </FormRightColumn>
           </FormColumns>

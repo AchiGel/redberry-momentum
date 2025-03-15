@@ -25,7 +25,11 @@ export default function PrioritySelect({
 
   return (
     <SelectContainer>
-      <SelectButton $isOpen={isOpen} onClick={() => setIsOpen(!isOpen)}>
+      <SelectButton
+        type="button"
+        $isOpen={isOpen}
+        onClick={() => setIsOpen(!isOpen)}
+      >
         <img
           src={priorities.find((p) => p.name === selectedPriority)?.icon}
           alt={selectedPriority}

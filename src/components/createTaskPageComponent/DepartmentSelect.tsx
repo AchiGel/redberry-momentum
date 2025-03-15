@@ -41,7 +41,11 @@ export default function DepartmentSelect({
 
   return (
     <SelectContainer>
-      <SelectButton $isOpen={isOpen} onClick={() => setIsOpen(!isOpen)}>
+      <SelectButton
+        type="button"
+        $isOpen={isOpen}
+        onClick={() => setIsOpen(!isOpen)}
+      >
         {selectedDepartment ? selectedDepartment : "სტატუსი"}
       </SelectButton>
       {isOpen && (

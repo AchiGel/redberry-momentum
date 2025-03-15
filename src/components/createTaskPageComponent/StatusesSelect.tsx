@@ -25,7 +25,11 @@ export default function StatusesSelect({
 
   return (
     <SelectContainer>
-      <SelectButton $isOpen={isOpen} onClick={() => setIsOpen(!isOpen)}>
+      <SelectButton
+        type="button"
+        $isOpen={isOpen}
+        onClick={() => setIsOpen(!isOpen)}
+      >
         {selectedStatus ? selectedStatus : "სტატუსი"}
       </SelectButton>
       {isOpen && (
