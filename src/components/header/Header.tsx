@@ -1,5 +1,4 @@
 import { Link } from "react-router";
-import { useState } from "react";
 import CreateAgentModal from "../createAgentModal/CreateAgentModal";
 import {
   HeaderWrapper,
@@ -9,8 +8,13 @@ import {
   CreateNewTaskButton,
 } from "./Header.styled";
 
-export default function Header() {
-  const [isOpen, setIsOpen] = useState(false);
+export default function Header({
+  isOpen,
+  setIsOpen,
+}: {
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   return (
     <HeaderWrapper>
       <Link to="/">

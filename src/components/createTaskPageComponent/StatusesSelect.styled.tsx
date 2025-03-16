@@ -67,3 +67,28 @@ export const SelectOption = styled.div`
   font-weight: 300;
   line-height: normal;
 `;
+
+export const EmployeeAddButton = styled.button`
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 12px 15px;
+  background: transparent;
+  text-align: left;
+  color: #8338ec;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  &::before {
+    content: url("/emp_add.png");
+    width: 18px;
+    height: 18px;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+`;

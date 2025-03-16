@@ -47,7 +47,7 @@ export default function DepartmentSelect({
         $isOpen={isOpen}
         onClick={() => setIsOpen(!isOpen)}
       >
-        {selectedDepartment ? selectedDepartment : "სტატუსი"}
+        {selectedDepartment ? selectedDepartment : "აირჩიეთ დეპარტამენტი"}
       </SelectButton>
       {isOpen && (
         <SelectDropDown>

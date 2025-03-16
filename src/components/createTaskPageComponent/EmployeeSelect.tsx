@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { Employee } from "../../pages/Home/Home";
 import {
+  EmployeeAddButton,
   SelectButton,
   SelectContainer,
   SelectDropDown,
   SelectOption,
 } from "./StatusesSelect.styled";
+import { useOutletContext } from "react-router";
 
 export default function EmployeeSelect({
   employees,
@@ -22,6 +24,9 @@ export default function EmployeeSelect({
   isDisabled: boolean;
   id: string;
 }) {
+  const modalOpen: React.Dispatch<React.SetStateAction<boolean>> =
+    useOutletContext();
+
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -66,6 +71,14 @@ export default function EmployeeSelect({
       </SelectButton>
       {isOpen && (
         <SelectDropDown>
+          <EmployeeAddButton
+            onClick={(e) => {
+              e.preventDefault();
+              modalOpen(true);
+            }}
+          >
+            დაამატე თანამშრომელი
+          </EmployeeAddButton>
           {employees.map((option) => (
             <SelectOption key={option.id} onClick={() => handleSelect(option)}>
               <img
