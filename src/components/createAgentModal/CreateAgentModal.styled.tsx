@@ -67,16 +67,16 @@ export const FormLabel = styled.label`
   }
 `;
 
-export const FormInput = styled.input`
+export const FormInput = styled.input<{ $validate?: string }>`
   padding: 10px;
   border-radius: 6px;
-  border: 1px solid #ced4da;
+  border: ${(props) => props.$validate};
   outline: none;
   margin-bottom: 6px;
 `;
 
-export const Validation = styled.span`
-  color: #6c757d;
+export const Validation = styled.span<{ $validate?: string }>`
+  color: ${(props) => props.$validate};
   font-size: 10px;
   font-style: normal;
   font-weight: 350;
@@ -84,6 +84,15 @@ export const Validation = styled.span`
   display: flex;
   align-items: center;
   gap: 2px;
+  &::before {
+    content: url("/check.png");
+    filter: ${(props) =>
+      props.$validate === "#6C757D"
+        ? ""
+        : props.$validate === "#FA4D4D"
+        ? "invert(46%) sepia(79%) saturate(3316%) hue-rotate(332deg) brightness(100%) contrast(94%)"
+        : "invert(38%) sepia(98%) saturate(1019%) hue-rotate(88deg) brightness(93%) contrast(94%)"};
+  }
 `;
 
 export const InputWrapper = styled.div`
@@ -125,4 +134,9 @@ export const AddButton = styled.button`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  transition: all 0.3s ease;
+  &:hover {
+    cursor: pointer;
+    background: #b588f4;
+  }
 `;

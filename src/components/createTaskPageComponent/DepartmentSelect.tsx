@@ -14,6 +14,7 @@ export default function DepartmentSelect({
   setIsDisabled,
   employees,
   setFilteredEmployees,
+  id,
 }: {
   departments: Department[];
   selectedDepartment: string;
@@ -21,6 +22,7 @@ export default function DepartmentSelect({
   setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>;
   employees: Employee[];
   setFilteredEmployees: React.Dispatch<React.SetStateAction<Employee[]>>;
+  id: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -31,8 +33,6 @@ export default function DepartmentSelect({
       (e) => e.department.id === option.id
     );
 
-    console.log(filteredEmployees);
-
     setFilteredEmployees(filteredEmployees);
 
     setIsDisabled(false);
@@ -42,6 +42,7 @@ export default function DepartmentSelect({
   return (
     <SelectContainer>
       <SelectButton
+        id={id}
         type="button"
         $isOpen={isOpen}
         onClick={() => setIsOpen(!isOpen)}

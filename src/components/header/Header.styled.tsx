@@ -30,6 +30,11 @@ export const CreateAgentButton = styled.button`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  transition: all 0.3s ease;
+  &:hover {
+    cursor: pointer;
+    border: 1px solid #b588f4;
+  }
 `;
 
 export const CreateNewTaskButton = styled.button`
@@ -45,8 +50,13 @@ export const CreateNewTaskButton = styled.button`
   display: flex;
   flex-direction: row-reverse;
   gap: 4px;
+  transition: all 0.3s ease;
   &::after {
     content: url("./add.png");
     height: 20px;
+  }
+  &:hover {
+    cursor: pointer;
+    background: #b588f4;
   }
 `;

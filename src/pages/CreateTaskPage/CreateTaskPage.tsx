@@ -27,23 +27,40 @@ import DepartmentSelect from "../../components/createTaskPageComponent/Departmen
 import EmployeeSelect from "../../components/createTaskPageComponent/EmployeeSelect";
 
 export default function CreateTaskPage() {
-  const [name, setName] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
+  //******************** სერვერიდან წამოღებული მონაცემები *******************//
+
   const [statuses, setStatuses] = useState<Status[]>([]);
   const [departments, setDepartments] = useState<Department[]>([]);
   const [priorities, setPriorities] = useState<Priority[]>([]);
   const [employees, setEmployees] = useState<Employee[]>([]);
 
+  //******************** დამხმარე სთეითები *******************//
+
   const [isDisabled, setIsDisabled] = useState(true);
   const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>([]);
 
+  //******************** არჩეული/დეფოლტ მნიშვნელობები *******************//
+
+  const [name, setName] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
   const [selectedStatus, setSelectedStatus] = useState<string>("დასაწყები");
   const [selectedPriority, setSelectedPriority] = useState<string>("საშუალო");
   const [selectedDepartment, setSelectedDepartment] = useState<string>(
     "ადმინისტრაციის დეპარტამენტი"
   );
   const [selectedEmployee, setSelectedEmployee] = useState<Employee>();
-  const [selectedDate, setSelectedDate] = useState("");
+
+  //******************** ხვალინდელი (შემდგომი) დღის განსაზღვრის ფუნქცია კალენდრისთვის *******************//
+
+  const getTomorrowDate = () => {
+    const date = new Date();
+    date.setDate(date.getDate() + 1);
+    return date.toISOString().split("T")[0];
+  };
+
+  const [selectedDate, setSelectedDate] = useState(getTomorrowDate());
+
+  //******************** მოგვაქვს სერვერიდან საჭირო ინფორმაცია *******************//
 
   useEffect(() => {
     // ***************** ვტვირთავთ სერვერიდან წამოღებულ სტატუსებს *********************//
@@ -92,8 +109,44 @@ export default function CreateTaskPage() {
     loadEmployees();
   }, []);
 
+  //******************** ვალიდაციის ფუნქციები *******************//
+
+  //************ სახელის ვალიდაცია ************//
+
+  const [nameIsTouched, setNameIsTouched] = useState(false);
+
+  const nameValidation = () => {
+    if (!name.trim() || name.length < 3 || name.length > 255) {
+      return false;
+    }
+    return true;
+  };
+
+  const nameIsValid = nameValidation();
+
+  //************ აღწერის ვალიდაცია ************//
+
+  const [descriptionIsTouched, setDescriptionIsTouched] = useState(false);
+
+  const descriptionValidation = () => {
+    if (description.trim().split(" ").length < 4 || description.length > 255) {
+      return false;
+    }
+    return true;
+  };
+
+  const descriptionIsValid = descriptionValidation();
+
+  //******************** ფორმის დადასტურების ფუნქცია, რომელიც ქმნის formData-ს სერვერზე გასაგზავნად *******************//
+
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!nameIsValid || !descriptionIsValid) {
+      setNameIsTouched(true);
+      setDescriptionIsTouched(true);
+      return;
+    }
 
     const selectedStatusObj = statuses.find((s) => s.name === selectedStatus);
     const selectedPriorityObj = priorities.find(
@@ -130,31 +183,97 @@ export default function CreateTaskPage() {
           <FormColumns>
             <FormLeftColumn>
               <InputWrapper>
-                <FormLabel>სათაური</FormLabel>
+                <FormLabel htmlFor="name">სათაური</FormLabel>
                 <FormInput
+                  $validate={
+                    !nameIsTouched
+                      ? "1px solid #CED4DA"
+                      : nameIsValid
+                      ? "1px solid #CED4DA"
+                      : "1px solid #FA4D4D"
+                  }
+                  id="name"
+                  name="name"
                   type="text"
                   value={name}
                   onChange={(e) => {
                     setName(e.target.value);
+                    if (!nameIsTouched) setNameIsTouched(true);
+                    if (e.target.value.trim() === "") setNameIsTouched(false);
                   }}
                 />
-                <Validation>მინიმუმ 2 სიმბოლო</Validation>
-                <Validation>მაქსიმუმ 255 სიმბოლო</Validation>
+                <Validation
+                  $validate={
+                    !nameIsTouched
+                      ? "#6C757D"
+                      : nameIsValid
+                      ? "#08A508"
+                      : "#FA4D4D"
+                  }
+                >
+                  მინიმუმ 3 სიმბოლო
+                </Validation>
+                <Validation
+                  $validate={
+                    !nameIsTouched
+                      ? "#6C757D"
+                      : nameIsValid
+                      ? "#08A508"
+                      : "#FA4D4D"
+                  }
+                >
+                  მაქსიმუმ 255 სიმბოლო
+                </Validation>
               </InputWrapper>
               <InputWrapper>
-                <FormLabel>აღწერა</FormLabel>
+                <FormLabel htmlFor="description">აღწერა</FormLabel>
                 <FormInput
+                  $validate={
+                    !descriptionIsTouched
+                      ? "1px solid #CED4DA"
+                      : descriptionIsValid
+                      ? "1px solid #CED4DA"
+                      : "1px solid #FA4D4D"
+                  }
+                  id="description"
+                  name="description"
                   type="textarea"
                   value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  onChange={(e) => {
+                    setDescription(e.target.value);
+                    if (!descriptionIsTouched) setDescriptionIsTouched(true);
+                    if (e.target.value.trim() === "")
+                      setDescriptionIsTouched(false);
+                  }}
                 />
-                <Validation>მინიმუმ 2 სიმბოლო</Validation>
-                <Validation>მაქსიმუმ 255 სიმბოლო</Validation>
+                <Validation
+                  $validate={
+                    !descriptionIsTouched
+                      ? "#6C757D"
+                      : descriptionIsValid
+                      ? "#08A508"
+                      : "#FA4D4D"
+                  }
+                >
+                  მინიმუმ 4 სიტყვა
+                </Validation>
+                <Validation
+                  $validate={
+                    !descriptionIsTouched
+                      ? "#6C757D"
+                      : descriptionIsValid
+                      ? "#08A508"
+                      : "#FA4D4D"
+                  }
+                >
+                  მაქსიმუმ 255 სიმბოლო
+                </Validation>
               </InputWrapper>
               <FormLeftColumnRow>
                 <InputWrapper>
                   <FormLabel htmlFor="priority">პრიორიტეტი</FormLabel>
                   <PrioritySelect
+                    id="priority"
                     priorities={priorities}
                     selectedPriority={selectedPriority}
                     setSelectedPriority={setSelectedPriority}
@@ -163,6 +282,7 @@ export default function CreateTaskPage() {
                 <InputWrapper>
                   <FormLabel htmlFor="status">სტატუსი</FormLabel>
                   <StatusesSelect
+                    id="status"
                     statuses={statuses}
                     setSelectedStatus={setSelectedStatus}
                     selectedStatus={selectedStatus}
@@ -174,6 +294,7 @@ export default function CreateTaskPage() {
               <InputWrapper>
                 <FormLabel htmlFor="department">დეპარტამენტი</FormLabel>
                 <DepartmentSelect
+                  id="department"
                   selectedDepartment={selectedDepartment}
                   setSelectedDepartment={setSelectedDepartment}
                   departments={departments}
@@ -187,6 +308,7 @@ export default function CreateTaskPage() {
                   პასუხისმგებელი თანამშრომელი
                 </FormLabel>
                 <EmployeeSelect
+                  id="employee"
                   employees={filteredEmployees}
                   selectedEmployee={selectedEmployee}
                   setSelectedEmployee={setSelectedEmployee}

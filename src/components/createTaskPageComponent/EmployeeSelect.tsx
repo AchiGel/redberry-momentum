@@ -12,6 +12,7 @@ export default function EmployeeSelect({
   setSelectedEmployee,
   selectedEmployee,
   isDisabled,
+  id,
 }: {
   employees: Employee[];
   selectedEmployee: Employee | undefined;
@@ -19,6 +20,7 @@ export default function EmployeeSelect({
     React.SetStateAction<Employee | undefined>
   >;
   isDisabled: boolean;
+  id: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -39,6 +41,7 @@ export default function EmployeeSelect({
   return (
     <SelectContainer>
       <SelectButton
+        id={id}
         type="button"
         disabled={isDisabled}
         $isDisabled={isDisabled}

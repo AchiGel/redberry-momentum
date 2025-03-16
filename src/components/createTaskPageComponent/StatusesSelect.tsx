@@ -11,10 +11,12 @@ export default function StatusesSelect({
   statuses,
   setSelectedStatus,
   selectedStatus,
+  id,
 }: {
   statuses: Status[];
   selectedStatus: string;
   setSelectedStatus: React.Dispatch<React.SetStateAction<string>>;
+  id: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -26,6 +28,7 @@ export default function StatusesSelect({
   return (
     <SelectContainer>
       <SelectButton
+        id={id}
         type="button"
         $isOpen={isOpen}
         onClick={() => setIsOpen(!isOpen)}

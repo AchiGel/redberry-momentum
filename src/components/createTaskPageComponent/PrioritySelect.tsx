@@ -11,10 +11,12 @@ export default function PrioritySelect({
   priorities,
   setSelectedPriority,
   selectedPriority,
+  id,
 }: {
   priorities: Priority[];
   selectedPriority: string;
   setSelectedPriority: React.Dispatch<React.SetStateAction<string>>;
+  id: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -26,6 +28,7 @@ export default function PrioritySelect({
   return (
     <SelectContainer>
       <SelectButton
+        id={id}
         type="button"
         $isOpen={isOpen}
         onClick={() => setIsOpen(!isOpen)}
