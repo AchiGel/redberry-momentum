@@ -12,11 +12,13 @@ export default function StatusesSelect({
   setSelectedStatus,
   selectedStatus,
   id,
+  validate,
 }: {
   statuses: Status[];
   selectedStatus: string;
   setSelectedStatus: React.Dispatch<React.SetStateAction<string>>;
   id: string;
+  validate: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -28,12 +30,19 @@ export default function StatusesSelect({
   return (
     <SelectContainer>
       <SelectButton
+        $validate={validate}
         id={id}
         type="button"
         $isOpen={isOpen}
         onClick={() => setIsOpen(!isOpen)}
       >
-        {selectedStatus ? selectedStatus : "სტატუსი"}
+        {selectedStatus ? (
+          selectedStatus
+        ) : (
+          <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+            {statuses.find((s) => s.id === 1)?.name}
+          </span>
+        )}
       </SelectButton>
       {isOpen && (
         <SelectDropDown>

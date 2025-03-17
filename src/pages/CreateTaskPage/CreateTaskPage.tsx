@@ -25,6 +25,7 @@ import StatusesSelect from "../../components/createTaskPageComponent/StatusesSel
 import PrioritySelect from "../../components/createTaskPageComponent/PrioritySelect";
 import DepartmentSelect from "../../components/createTaskPageComponent/DepartmentSelect";
 import EmployeeSelect from "../../components/createTaskPageComponent/EmployeeSelect";
+import { DateInput } from "../../components/createTaskPageComponent/StatusesSelect.styled";
 
 export default function CreateTaskPage() {
   //******************** სერვერიდან წამოღებული მონაცემები *******************//
@@ -43,12 +44,11 @@ export default function CreateTaskPage() {
 
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [selectedStatus, setSelectedStatus] = useState<string>("დასაწყები");
-  const [selectedPriority, setSelectedPriority] = useState<string>("საშუალო");
-  const [selectedDepartment, setSelectedDepartment] = useState<string>(
-    "ადმინისტრაციის დეპარტამენტი"
-  );
+  const [selectedStatus, setSelectedStatus] = useState<string>("");
+  const [selectedPriority, setSelectedPriority] = useState<string>("");
+  const [selectedDepartment, setSelectedDepartment] = useState<string>("");
   const [selectedEmployee, setSelectedEmployee] = useState<Employee>();
+  const [selectedDate, setSelectedDate] = useState<string>("");
 
   //******************** ხვალინდელი (შემდგომი) დღის განსაზღვრის ფუნქცია კალენდრისთვის *******************//
 
@@ -57,8 +57,6 @@ export default function CreateTaskPage() {
     date.setDate(date.getDate() + 1);
     return date.toISOString().split("T")[0];
   };
-
-  const [selectedDate, setSelectedDate] = useState(getTomorrowDate());
 
   //******************** მოგვაქვს სერვერიდან საჭირო ინფორმაცია *******************//
 
@@ -137,14 +135,59 @@ export default function CreateTaskPage() {
 
   const descriptionIsValid = descriptionValidation();
 
+  //************ პრიორიტეტის ვალიდაცია ************//
+
+  const [priorityIsTouched, setPriorityIsTouched] = useState(false);
+
+  const priorityIsValid = selectedPriority.trim() !== "";
+
+  //************ სტატუსის ვალიდაცია ************//
+
+  const [statusIsTouched, setStatusIsTouched] = useState(false);
+
+  const statusIsValid = selectedStatus.trim() !== "";
+
+  //************ დეპარტამენტის ვალიდაცია ************//
+  const [departmentIsTouched, setDepartmentIsTouched] = useState(false);
+
+  const departmentIsValid = selectedDepartment.trim() !== "";
+
+  //************ თანამშრომლის ვალიდაცია ************//
+  const [employeeIsTouched, setEmployeeIsTouched] = useState(false);
+
+  const employeeIsValid = selectedEmployee !== undefined;
+
+  //************ თარიღის ვალიდაცია ************//
+  const [dateIsTouched, setDateIsTouched] = useState(false);
+
+  const dateValidation = () => {
+    const today = new Date().toISOString().split("T")[0];
+    return selectedDate >= today;
+  };
+
+  const dateIsValid = dateValidation();
+
   //******************** ფორმის დადასტურების ფუნქცია, რომელიც ქმნის formData-ს სერვერზე გასაგზავნად *******************//
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!nameIsValid || !descriptionIsValid) {
+    if (
+      !nameIsValid ||
+      !descriptionIsValid ||
+      !priorityIsValid ||
+      !statusIsValid ||
+      !departmentIsValid ||
+      !employeeIsValid ||
+      !dateIsValid
+    ) {
       setNameIsTouched(true);
       setDescriptionIsTouched(true);
+      setPriorityIsTouched(true);
+      setStatusIsTouched(true);
+      setDepartmentIsTouched(true);
+      setEmployeeIsTouched(true);
+      setDateIsTouched(true);
       return;
     }
 
@@ -276,7 +319,11 @@ export default function CreateTaskPage() {
                     id="priority"
                     priorities={priorities}
                     selectedPriority={selectedPriority}
-                    setSelectedPriority={setSelectedPriority}
+                    setSelectedPriority={(value) => {
+                      setSelectedPriority(value);
+                      setPriorityIsTouched(true);
+                    }}
+                    validate={priorityIsTouched && !priorityIsValid}
                   />
                 </InputWrapper>
                 <InputWrapper>
@@ -284,7 +331,11 @@ export default function CreateTaskPage() {
                   <StatusesSelect
                     id="status"
                     statuses={statuses}
-                    setSelectedStatus={setSelectedStatus}
+                    setSelectedStatus={(value) => {
+                      setSelectedStatus(value);
+                      setStatusIsTouched(true);
+                    }}
+                    validate={statusIsTouched && !statusIsValid}
                     selectedStatus={selectedStatus}
                   />
                 </InputWrapper>
@@ -296,7 +347,11 @@ export default function CreateTaskPage() {
                 <DepartmentSelect
                   id="department"
                   selectedDepartment={selectedDepartment}
-                  setSelectedDepartment={setSelectedDepartment}
+                  setSelectedDepartment={(value) => {
+                    setSelectedDepartment(value);
+                    setDepartmentIsTouched(true);
+                  }}
+                  validate={departmentIsTouched && !departmentIsValid}
                   departments={departments}
                   setIsDisabled={setIsDisabled}
                   employees={employees}
@@ -311,18 +366,29 @@ export default function CreateTaskPage() {
                   id="employee"
                   employees={filteredEmployees}
                   selectedEmployee={selectedEmployee}
-                  setSelectedEmployee={setSelectedEmployee}
+                  setSelectedEmployee={(value) => {
+                    setSelectedEmployee(value);
+                    setEmployeeIsTouched(true);
+                  }}
                   isDisabled={isDisabled}
+                  validate={employeeIsTouched && !employeeIsValid}
                 />
               </InputWrapper>
               <InputWrapper>
                 <FormLabel htmlFor="date">დედლაინი</FormLabel>
-                <input
+                <DateInput
+                  required
                   type="date"
                   name="date"
                   id="date"
-                  value={selectedDate}
-                  onChange={(e) => setSelectedDate(e.target.value)}
+                  value={selectedDate ? selectedDate : getTomorrowDate()}
+                  min={new Date().toISOString().split("T")[0]}
+                  onChange={(e) => {
+                    setSelectedDate(e.target.value);
+                    setDateIsTouched(true);
+                  }}
+                  $dateTouch={dateIsTouched}
+                  $validation={dateIsValid}
                 />
               </InputWrapper>
             </FormRightColumn>

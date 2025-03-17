@@ -15,6 +15,7 @@ export default function DepartmentSelect({
   employees,
   setFilteredEmployees,
   id,
+  validate,
 }: {
   departments: Department[];
   selectedDepartment: string;
@@ -23,6 +24,7 @@ export default function DepartmentSelect({
   employees: Employee[];
   setFilteredEmployees: React.Dispatch<React.SetStateAction<Employee[]>>;
   id: string;
+  validate: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -42,12 +44,19 @@ export default function DepartmentSelect({
   return (
     <SelectContainer>
       <SelectButton
+        $validate={validate}
         id={id}
         type="button"
         $isOpen={isOpen}
         onClick={() => setIsOpen(!isOpen)}
       >
-        {selectedDepartment ? selectedDepartment : "აირჩიეთ დეპარტამენტი"}
+        {selectedDepartment ? (
+          selectedDepartment
+        ) : (
+          <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+            {departments.find((d) => d.id === 2)?.name}
+          </span>
+        )}
       </SelectButton>
       {isOpen && (
         <SelectDropDown>

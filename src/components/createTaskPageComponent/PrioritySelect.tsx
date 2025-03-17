@@ -12,11 +12,13 @@ export default function PrioritySelect({
   setSelectedPriority,
   selectedPriority,
   id,
+  validate,
 }: {
   priorities: Priority[];
   selectedPriority: string;
   setSelectedPriority: React.Dispatch<React.SetStateAction<string>>;
   id: string;
+  validate: boolean;
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -28,6 +30,7 @@ export default function PrioritySelect({
   return (
     <SelectContainer>
       <SelectButton
+        $validate={validate}
         id={id}
         type="button"
         $isOpen={isOpen}
@@ -37,7 +40,17 @@ export default function PrioritySelect({
           src={priorities.find((p) => p.name === selectedPriority)?.icon}
           alt={selectedPriority}
         />
-        {selectedPriority ? selectedPriority : "პრიორიტეტი"}
+        {selectedPriority ? (
+          selectedPriority
+        ) : (
+          <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+            <img
+              src={priorities.find((p) => p.id === 2)?.icon}
+              alt="middle Icon"
+            />
+            {priorities.find((p) => p.id === 2)?.name}
+          </span>
+        )}
       </SelectButton>
       {isOpen && (
         <SelectDropDown>

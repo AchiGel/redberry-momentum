@@ -15,6 +15,7 @@ export default function EmployeeSelect({
   selectedEmployee,
   isDisabled,
   id,
+  validate,
 }: {
   employees: Employee[];
   selectedEmployee: Employee | undefined;
@@ -23,6 +24,7 @@ export default function EmployeeSelect({
   >;
   isDisabled: boolean;
   id: string;
+  validate: boolean;
 }) {
   const modalOpen: React.Dispatch<React.SetStateAction<boolean>> =
     useOutletContext();
@@ -46,6 +48,7 @@ export default function EmployeeSelect({
   return (
     <SelectContainer>
       <SelectButton
+        $validate={validate}
         id={id}
         type="button"
         disabled={isDisabled}

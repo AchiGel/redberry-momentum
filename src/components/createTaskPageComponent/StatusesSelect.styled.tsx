@@ -9,13 +9,15 @@ export const SelectContainer = styled.div`
 export const SelectButton = styled.button<{
   $isOpen: boolean;
   $isDisabled?: boolean;
+  $validate?: boolean;
 }>`
   min-height: 45px;
   position: relative;
   width: 100%;
   padding: 10px;
   background: white;
-  border: 1px solid #dee2e6;
+  border: ${(props) =>
+    props.$validate ? "1px solid #FA4D4D" : "1px solid #dee2e6"};
   border-radius: 5px;
   cursor: ${(props) => (props.$isDisabled ? "" : "pointer")};
   text-align: left;
@@ -91,4 +93,25 @@ export const EmployeeAddButton = styled.button`
   &:hover {
     cursor: pointer;
   }
+`;
+
+export const DateInput = styled.input<{
+  $dateTouch: boolean;
+  $validation: boolean;
+}>`
+  padding: 14px;
+  border-radius: 5px;
+  max-width: 318px;
+  font-family: "FiraGo", sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 20px;
+  letter-spacing: -0.175px;
+  border: ${(props) =>
+    !props.$dateTouch
+      ? "1px solid #CED4DA"
+      : props.$validation
+      ? "1px solid #08A508"
+      : "1px solid #FA4D4D"};
 `;
