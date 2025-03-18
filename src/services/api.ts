@@ -78,3 +78,17 @@ export const getSingleTask = async (id: number) => {
   const data = await response.json();
   return data;
 };
+
+// ***************** სერვერიდან მოგვაქვს თითოეული დავალების კომენტარები *********************//
+
+export const getSingleTaskComments = async (id: number) => {
+  const response = await fetch(`${BASE_URL}/tasks/${id}/comments`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${TOKEN}`,
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json();
+  return data;
+};

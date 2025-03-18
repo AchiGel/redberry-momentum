@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const TaskInnerPageContainer = styled.div`
   display: flex;
-  gap: 20px;
+  justify-content: space-between;
 `;
 
 export const TaskInnerPageBody = styled.div`
@@ -117,4 +117,69 @@ export const TableEmployeeName = styled.span`
   font-style: normal;
   font-weight: 400;
   line-height: 150%;
+`;
+
+export const CommentsContainer = styled.div`
+  border-radius: 10px;
+  border: 0.3px solid #ddd2ff;
+  background: rgba(248, 243, 254, 0.65);
+  padding: 40px 45px 52px 45px;
+  display: flex;
+  flex-direction: column;
+  gap: 66px;
+  min-width: 741px;
+`;
+
+export const CommentsTexarea = styled.textarea`
+  resize: none;
+  width: 100%;
+  min-height: 135px;
+  padding: 18px 20px 15px 20px;
+  border-radius: 10px;
+  border: 0.3px solid #adb5bd;
+  background: #fff;
+  color: #898989;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 350;
+  line-height: normal;
+`;
+
+export const CommentsTexareaConteiner = styled.div`
+  position: relative;
+`;
+
+export const CommentsList = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const CommentsTitle = styled.h3`
+  color: #000;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+`;
+
+export const CommentsTitleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 7px;
+`;
+
+export const CommentsQuantity = styled.span`
+  width: 30px;
+  height: 22px;
+  border-radius: 30px;
+  background: #8338ec;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 `;

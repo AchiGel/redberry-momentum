@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { getAllStatuses, getSingleTask } from "../../services/api";
+import {
+  getAllStatuses,
+  getSingleTask,
+  getSingleTaskComments,
+} from "../../services/api";
 import { Status, Task } from "../Home/Home";
 import { useParams } from "react-router";
 
@@ -25,10 +29,19 @@ import {
   TableEmployeeImageAndName,
   TableEmployeeName,
   TableEmployeeImage,
+  CommentsContainer,
+  CommentsTexarea,
+  CommentsTexareaConteiner,
+  CommentsList,
+  CommentsTitle,
+  CommentsTitleContainer,
+  CommentsQuantity,
 } from "./TaskInnerPage.styled";
+import { OptionChooseButton } from "../../components/filtration/Filtration.styled";
 
 export default function TaskInnerPage() {
   const [singleTask, setSingleTask] = useState<Task>();
+  const [singleTaskComments, setSingleTaskComments] = useState<[]>();
   const [statuses, setStatuses] = useState<Status[]>();
   const { id } = useParams<{ id: string }>();
 
@@ -42,6 +55,16 @@ export default function TaskInnerPage() {
       }
     };
     loadTask();
+
+    const loadComments = async () => {
+      try {
+        const comments = await getSingleTaskComments(Number(id));
+        setSingleTaskComments(comments);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    loadComments();
 
     const loadStatuses = async () => {
       try {
@@ -72,8 +95,6 @@ export default function TaskInnerPage() {
   };
 
   const formattedDate = formatDate(singleTask?.due_date);
-
-  console.log(singleTask);
 
   return (
     <div>
@@ -147,6 +168,22 @@ export default function TaskInnerPage() {
               </DetailsTable>
             </TaskInnerPageDetails>
           </TaskInnerPageBody>
+          <CommentsContainer>
+            <CommentsTexareaConteiner>
+              <CommentsTexarea placeholder="დაწერე კომენტარი"></CommentsTexarea>
+              <OptionChooseButton $comments={"comments"}>
+                დააკომენტარე
+              </OptionChooseButton>
+            </CommentsTexareaConteiner>
+            <CommentsList>
+              <CommentsTitleContainer>
+                <CommentsTitle>კომენტარები</CommentsTitle>
+                <CommentsQuantity>
+                  {singleTaskComments?.length}
+                </CommentsQuantity>
+              </CommentsTitleContainer>
+            </CommentsList>
+          </CommentsContainer>
         </TaskInnerPageContainer>
       ) : (
         "Loading..."

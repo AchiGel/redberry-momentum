@@ -62,7 +62,10 @@ export const OptionLabelName = styled.span`
   line-height: normal;
 `;
 
-export const OptionChooseButton = styled.button`
+export const OptionChooseButton = styled.button<{ $comments?: string }>`
+  position: ${(props) => (props.$comments ? "absolute" : "")};
+  bottom: ${(props) => (props.$comments ? "15px" : "")};
+  right: ${(props) => (props.$comments ? "20px" : "")};
   padding: 8px 20px;
   color: #fff;
   font-size: 16px;
