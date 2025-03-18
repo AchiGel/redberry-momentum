@@ -23,6 +23,7 @@ import {
   SelectDropDown,
   SelectOption,
 } from "../createTaskPageComponent/StatusesSelect.styled";
+import AgentAvatar from "./AgentAvatar";
 
 export default function CreateAgentModal({
   isOpen,
@@ -80,33 +81,14 @@ export default function CreateAgentModal({
   //******************** ავატარის ვალიდაცია *******************//
 
   const [avatar, setAvatar] = useState<File | null>(null);
-  const [avatarError, setAvatarError] = useState<string | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
-    if (!file) {
-      setAvatarError("ფაილის ატვირთვა აუცილებელია.");
-      setAvatar(null);
+    if (!file || !file.type.startsWith("image/") || file.size > 600 * 1024)
       return;
-    }
-
-    if (!file.type.startsWith("image/")) {
-      setAvatarError(
-        "ფაილი უნდა იყოს გამოსახულების ფორმატში (JPEG, PNG, GIF...)."
-      );
-      setAvatar(null);
-      return;
-    }
-
-    if (file.size > 600 * 1024) {
-      setAvatarError("ფაილის ზომა არ უნდა აღემატებოდეს 600KB-ს.");
-      setAvatar(null);
-      return;
-    }
 
     setAvatar(file);
-    setAvatarError(null);
   };
 
   //******************** დეპარტამენტის ვალიდაცია *******************//
@@ -270,18 +252,10 @@ export default function CreateAgentModal({
               </InputWrapper>
             </InputRow>
             <InputWrapper>
-              <FormLabel htmlFor="avatar">ავატარი</FormLabel>
-              <input
-                type="file"
-                id="avatar"
-                accept="image/*"
-                onChange={handleFileChange}
+              <AgentAvatar
+                avatar={avatar}
+                handleFileChange={handleFileChange}
               />
-              {avatarError && (
-                <Validation style={{ color: "#FA4D4D" }}>
-                  {avatarError}
-                </Validation>
-              )}
             </InputWrapper>
             <InputWrapper>
               <FormLabel>დეპარტამენტი</FormLabel>
