@@ -64,3 +64,17 @@ export const getAllEmployees = async () => {
   const data = await response.json();
   return data;
 };
+
+// ***************** სერვერიდან მოგვაქვს თითოეული დავალება *********************//
+
+export const getSingleTask = async (id: number) => {
+  const response = await fetch(`${BASE_URL}/tasks/${id}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${TOKEN}`,
+      "Content-Type": "application/json",
+    },
+  });
+  const data = await response.json();
+  return data;
+};

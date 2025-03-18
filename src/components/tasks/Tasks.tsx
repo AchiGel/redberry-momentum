@@ -48,6 +48,7 @@ export default function Tasks({
             {filteredTasks.map((task) => (
               <TaskCard
                 key={task.id}
+                id={task.id}
                 priority={task.priority.name}
                 department={task.department.name}
                 date={task.due_date}

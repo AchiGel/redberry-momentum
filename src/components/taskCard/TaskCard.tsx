@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import {
   TaskCardLayout,
   TaskCardUpper,
@@ -24,6 +25,7 @@ interface TaskCardTypes {
   comments: number;
   priorityIcon: string;
   layoutColor: number;
+  id: number;
 }
 
 export default function TaskCard({
@@ -36,6 +38,7 @@ export default function TaskCard({
   comments,
   priorityIcon,
   layoutColor,
+  id,
 }: TaskCardTypes) {
   // ***************** თარიღის ფორმატირება *********************//
   const preDate = new Date(date);
@@ -46,38 +49,40 @@ export default function TaskCard({
   });
 
   return (
-    <TaskCardLayout $layoutColor={layoutColor}>
-      <TaskCardUpper>
-        <CardPriorityAndDepartment>
-          <CardPriority $priority={priority}>
-            <img src={priorityIcon} alt={priority} />
-            {priority}
-          </CardPriority>
-          <CardDepartment $department={department}>
-            {department.slice(0, 7) + "."}
-          </CardDepartment>
-        </CardPriorityAndDepartment>
-        <CardDate>{formattedDate}</CardDate>
-      </TaskCardUpper>
-      <TaskCardMiddle>
-        <TaskName>{name}</TaskName>
-        <TaskDescr>
-          {descr.length > 100 ? descr.slice(0, 100) + "..." : descr}
-        </TaskDescr>
-      </TaskCardMiddle>
-      <TaskCardBottom>
-        <TaskAuthorImg>
-          <img
-            style={{ width: "100%", objectFit: "cover" }}
-            src={authorImg}
-            alt="Author Image"
-          />
-        </TaskAuthorImg>
-        <TaskComments>
-          <img src="./Comments.png" />
-          <TaskCommentsQuantity>{comments}</TaskCommentsQuantity>
-        </TaskComments>
-      </TaskCardBottom>
-    </TaskCardLayout>
+    <Link to={`/${id}`}>
+      <TaskCardLayout $layoutColor={layoutColor}>
+        <TaskCardUpper>
+          <CardPriorityAndDepartment>
+            <CardPriority $priority={priority}>
+              <img src={priorityIcon} alt={priority} />
+              {priority}
+            </CardPriority>
+            <CardDepartment $department={department}>
+              {department.slice(0, 7) + "."}
+            </CardDepartment>
+          </CardPriorityAndDepartment>
+          <CardDate>{formattedDate}</CardDate>
+        </TaskCardUpper>
+        <TaskCardMiddle>
+          <TaskName>{name}</TaskName>
+          <TaskDescr>
+            {descr.length > 100 ? descr.slice(0, 100) + "..." : descr}
+          </TaskDescr>
+        </TaskCardMiddle>
+        <TaskCardBottom>
+          <TaskAuthorImg>
+            <img
+              style={{ width: "100%", objectFit: "cover" }}
+              src={authorImg}
+              alt="Author Image"
+            />
+          </TaskAuthorImg>
+          <TaskComments>
+            <img src="./Comments.png" />
+            <TaskCommentsQuantity>{comments}</TaskCommentsQuantity>
+          </TaskComments>
+        </TaskCardBottom>
+      </TaskCardLayout>
+    </Link>
   );
 }
