@@ -152,6 +152,7 @@ export const CommentsTexareaConteiner = styled.div`
 export const CommentsList = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 40px;
 `;
 
 export const CommentsTitle = styled.h3`
@@ -182,4 +183,82 @@ export const CommentsQuantity = styled.span`
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+`;
+
+export const CommentsListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 38px;
+`;
+
+export const SingleCommentLayout = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+`;
+
+export const SingleCommentTextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+`;
+
+export const SingleCommentAuthor = styled.h4`
+  color: #212529;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+`;
+
+export const SingleCommentAuthorAvatar = styled.div`
+  width: 38px;
+  height: 38px;
+  border-radius: 40px;
+  overflow: hidden;
+`;
+
+export const SingleCommentText = styled.p`
+  color: #343a40;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 350;
+  line-height: normal;
+`;
+
+export const SingleCommentReplyButton = styled.button`
+  margin-top: 2px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: #8338ec;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  &::before {
+    content: url("./Left_2.png");
+    width: 14px;
+    height: 14px;
+  }
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+export const CommentAndReplyWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+export const ReplayLayout = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-left: 53px;
 `;

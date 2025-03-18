@@ -4,7 +4,7 @@ import {
   getSingleTask,
   getSingleTaskComments,
 } from "../../services/api";
-import { Status, Task } from "../Home/Home";
+import { Comment, Status, Task } from "../Home/Home";
 import { useParams } from "react-router";
 
 import {
@@ -36,13 +36,25 @@ import {
   CommentsTitle,
   CommentsTitleContainer,
   CommentsQuantity,
+  CommentsListContainer,
+  SingleCommentLayout,
+  SingleCommentTextWrapper,
+  SingleCommentText,
+  SingleCommentAuthor,
+  SingleCommentAuthorAvatar,
+  SingleCommentReplyButton,
+  CommentAndReplyWrapper,
+  ReplayLayout,
 } from "./TaskInnerPage.styled";
 import { OptionChooseButton } from "../../components/filtration/Filtration.styled";
 
 export default function TaskInnerPage() {
   const [singleTask, setSingleTask] = useState<Task>();
-  const [singleTaskComments, setSingleTaskComments] = useState<[]>();
+  const [singleTaskComments, setSingleTaskComments] = useState<Comment[]>();
   const [statuses, setStatuses] = useState<Status[]>();
+  const [replyingToCommentId, setReplyingToCommentId] = useState<number | null>(
+    null
+  );
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -95,6 +107,7 @@ export default function TaskInnerPage() {
   };
 
   const formattedDate = formatDate(singleTask?.due_date);
+  console.log(singleTaskComments);
 
   return (
     <div>
@@ -182,6 +195,62 @@ export default function TaskInnerPage() {
                   {singleTaskComments?.length}
                 </CommentsQuantity>
               </CommentsTitleContainer>
+              <CommentsListContainer>
+                {singleTaskComments?.map((c) => (
+                  <CommentAndReplyWrapper key={c.id}>
+                    <SingleCommentLayout>
+                      <SingleCommentAuthorAvatar>
+                        <img
+                          style={{ width: "100%", objectFit: "cover" }}
+                          src={c.author_avatar}
+                          alt="author avatar"
+                        />
+                      </SingleCommentAuthorAvatar>
+                      <SingleCommentTextWrapper>
+                        <SingleCommentAuthor>
+                          {c.author_nickname}
+                        </SingleCommentAuthor>
+                        <SingleCommentText>{c.text}</SingleCommentText>
+                        <SingleCommentReplyButton
+                          onClick={() =>
+                            setReplyingToCommentId(
+                              replyingToCommentId === c.id ? null : c.id
+                            )
+                          }
+                        >
+                          უპასუხე
+                        </SingleCommentReplyButton>
+                      </SingleCommentTextWrapper>
+                    </SingleCommentLayout>
+                    {replyingToCommentId === c.id && (
+                      <textarea placeholder="პასუხი"></textarea>
+                    )}
+                    {c.sub_comments && (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "20px",
+                        }}
+                      >
+                        {c.sub_comments.map((sc) => (
+                          <ReplayLayout key={sc.id}>
+                            <SingleCommentAuthorAvatar>
+                              <img src={sc.author_avatar} alt="reply avatar" />
+                            </SingleCommentAuthorAvatar>
+                            <SingleCommentTextWrapper>
+                              <SingleCommentAuthor>
+                                {sc.author_nickname}
+                              </SingleCommentAuthor>
+                              <SingleCommentText>{sc.text}</SingleCommentText>
+                            </SingleCommentTextWrapper>
+                          </ReplayLayout>
+                        ))}
+                      </div>
+                    )}
+                  </CommentAndReplyWrapper>
+                ))}
+              </CommentsListContainer>
             </CommentsList>
           </CommentsContainer>
         </TaskInnerPageContainer>

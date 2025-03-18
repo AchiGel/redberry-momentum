@@ -46,6 +46,25 @@ export interface Task {
   employee: Employee;
 }
 
+export interface Comment {
+  id: number;
+  text: string;
+  task_id: number;
+  parent_id: number | null;
+  author_avatar: string;
+  author_nickname: string;
+  sub_comments: SubComment[];
+}
+
+export interface SubComment {
+  id: number;
+  text: string;
+  task_id: number;
+  parent_id: number;
+  author_avatar: string;
+  author_nickname: string;
+}
+
 export default function Home() {
   const [statuses, setStatuses] = useState<Status[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
