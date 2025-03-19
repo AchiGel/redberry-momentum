@@ -1,5 +1,5 @@
-const TOKEN = "9e6a12ca-8594-4bbb-9987-9a92500bd781";
-const BASE_URL = "https://momentum.redberryinternship.ge/api";
+const TOKEN = import.meta.env.VITE_API_TOKEN;
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 // ***************** სერვერიდან მოგვაქვს ყველა სტატუსი *********************//
 
