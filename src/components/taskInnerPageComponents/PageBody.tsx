@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Status, Task } from "../../pages/Home/Home";
 import {
   TaskInnerPageBody,
@@ -17,6 +18,12 @@ import {
   TableEmployeeImage,
   TableEmployeeName,
 } from "../../pages/TaskInnerPage/TaskInnerPage.styled";
+import {
+  SelectContainer,
+  SelectButton,
+  SelectDropDown,
+  SelectOption,
+} from "../createTaskPageComponent/StatusesSelect.styled";
 import { CardPriority, CardDepartment } from "../taskCard/TaskCard.styled";
 
 export default function PageBody({
@@ -28,6 +35,8 @@ export default function PageBody({
   statuses: Status[] | undefined;
   formattedDate: string;
 }) {
+  const [statusIsOpened, setStatusIsOpened] = useState<boolean>(false);
+  const [selectedStatus, setSelectedStatus] = useState<string>("");
   return (
     <TaskInnerPageBody>
       <TaskInnerPageMain>
@@ -56,11 +65,44 @@ export default function PageBody({
               <img src="/pie-chart.png" alt="pie-chart" />
               <TableRowLeftText>სტატუსი</TableRowLeftText>
             </TableRowLeft>
-            <select>
-              {statuses?.map((s) => (
-                <option key={s.id}>{s.name}</option>
-              ))}
-            </select>
+            <SelectContainer $innerPage="innerPage">
+              <SelectButton
+                $isOpen={statusIsOpened}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setStatusIsOpened(!statusIsOpened);
+                }}
+              >
+                {selectedStatus ? (
+                  selectedStatus
+                ) : (
+                  <span
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "4px",
+                    }}
+                  >
+                    {singleTask.status.name}
+                  </span>
+                )}
+              </SelectButton>
+              {statusIsOpened && (
+                <SelectDropDown>
+                  {statuses?.map((option) => (
+                    <SelectOption
+                      key={option.id}
+                      onClick={() => {
+                        setSelectedStatus(option.name);
+                        setStatusIsOpened(false);
+                      }}
+                    >
+                      {option.name}
+                    </SelectOption>
+                  ))}
+                </SelectDropDown>
+              )}
+            </SelectContainer>
           </DetailsTableRow>
           <DetailsTableRow>
             <TableRowLeft>

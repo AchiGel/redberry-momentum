@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-export const SelectContainer = styled.div`
+export const SelectContainer = styled.div<{ $innerPage?: string }>`
   position: relative;
   width: 259px;
-  min-width: 100%;
+  min-width: ${(props) => (props.$innerPage ? "" : "100%")};
 `;
 
 export const SelectButton = styled.button<{

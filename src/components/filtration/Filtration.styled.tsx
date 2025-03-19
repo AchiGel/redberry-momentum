@@ -77,6 +77,11 @@ export const OptionChooseButton = styled.button<{ $comments?: string }>`
   border: none;
   outline: none;
   align-self: flex-end;
+  transition: all 0.3s ease;
+  &:hover {
+    cursor: pointer;
+    background: #b588f4;
+  }
 `;
 
 export const EmployeeAvatar = styled.img`

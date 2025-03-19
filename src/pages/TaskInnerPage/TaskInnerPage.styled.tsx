@@ -9,6 +9,7 @@ export const TaskInnerPageBody = styled.div`
   display: flex;
   flex-direction: column;
   gap: 63px;
+  max-width: 715px;
 `;
 
 export const TaskInnerPageMain = styled.div`
@@ -46,6 +47,7 @@ export const TaskInnerPageDetails = styled.div`
   display: flex;
   flex-direction: column;
   gap: 18px;
+  max-width: 493px;
 `;
 
 export const DetailsTitle = styled.h2`
@@ -128,6 +130,7 @@ export const CommentsContainer = styled.div`
   flex-direction: column;
   gap: 66px;
   min-width: 741px;
+  margin-top: 59px;
 `;
 
 export const CommentsTexarea = styled.textarea`
