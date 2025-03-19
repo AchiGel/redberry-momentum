@@ -19,6 +19,7 @@ import {
   getAllEmployees,
   getAllPriorities,
   getAllStatuses,
+  postNewTask,
 } from "../../services/api";
 import { Status, Department, Priority, Employee } from "../Home/Home";
 import StatusesSelect from "../../components/createTaskPageComponent/StatusesSelect";
@@ -169,7 +170,7 @@ export default function CreateTaskPage() {
 
   //******************** ფორმის დადასტურების ფუნქცია, რომელიც ქმნის formData-ს სერვერზე გასაგზავნად *******************//
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (
@@ -211,6 +212,27 @@ export default function CreateTaskPage() {
     if (selectedDate) formData.append("due_date", selectedDate);
 
     console.log("Form Data:", Object.fromEntries(formData.entries()));
+
+    try {
+      await postNewTask(formData);
+      setName("");
+      setDescription("");
+      setSelectedDate("");
+      setSelectedDepartment("");
+      setSelectedEmployee(undefined);
+      setSelectedPriority("");
+      setSelectedStatus("");
+      setNameIsTouched(false);
+      setDescriptionIsTouched(false);
+      setPriorityIsTouched(false);
+      setStatusIsTouched(false);
+      setDepartmentIsTouched(false);
+      setEmployeeIsTouched(false);
+      setDateIsTouched(false);
+      console.log("task posted successfuly");
+    } catch (error) {
+      console.log("error posting task", error);
+    }
   };
 
   return (

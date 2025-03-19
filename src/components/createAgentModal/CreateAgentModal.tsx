@@ -16,7 +16,7 @@ import {
   AddButton,
 } from "./CreateAgentModal.styled";
 import { Department } from "../../pages/Home/Home";
-import { getAllDepartments } from "../../services/api";
+import { getAllDepartments, postEmployee } from "../../services/api";
 import {
   SelectContainer,
   SelectButton,
@@ -134,10 +134,10 @@ export default function CreateAgentModal({
 
   //******************** ფორმის დადასტურების ფუნქცია, რომელიც ქმნის formData-ს სერვერზე გასაგზავნად *******************//
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!nameIsValid || !surnameIsValid || !departmentIsValid) {
+    if (!nameIsValid || !surnameIsValid || !departmentIsValid || !avatar) {
       setNameIsTouched(true);
       setSurnameIsTouched(true);
       setDepartmentIsTouched(true);
@@ -147,10 +147,27 @@ export default function CreateAgentModal({
     const formData = new FormData();
     if (name) formData.append("name", name);
     if (surname) formData.append("surname", surname);
-    if (selectedDepartment) formData.append("department", selectedDepartment);
-    if (avatar) formData.append("avatar", avatar);
+    if (selectedDepartment) {
+      const departmentId = departments.find(
+        (d) => d.name === selectedDepartment
+      )?.id;
+      formData.append("department_id", departmentId);
+    }
+    if (avatar) formData.append("avatar", avatar as Blob);
 
-    console.log("Form Data:", Object.fromEntries(formData.entries()));
+    try {
+      await postEmployee(formData);
+      setName("");
+      setSurname("");
+      setSelectedDepartment("");
+      setAvatar(null);
+      setNameIsTouched(false);
+      setSurnameIsTouched(false);
+      setDepartmentIsTouched(false);
+      console.log("employee posted successfuly");
+    } catch (error) {
+      console.log("error posting employee", error);
+    }
   };
 
   return (

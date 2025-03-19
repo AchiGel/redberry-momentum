@@ -124,3 +124,47 @@ export const postSingleTaskComment = async (
     throw error;
   }
 };
+
+// ***************** სერვერზე ვპოსტავთ თანამშრომელს *********************//
+
+export const postEmployee = async (employee: FormData) => {
+  try {
+    const response = await fetch(`${BASE_URL}/employees`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+      },
+      body: employee,
+    });
+
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      throw new Error(`Error ${response.status}: ${errorMessage}`);
+    }
+  } catch (error) {
+    console.error("Failed to post employee:", error);
+    throw error;
+  }
+};
+
+// ***************** სერვერზე ვპოსტავთ დავალებას *********************//
+
+export const postNewTask = async (task: FormData) => {
+  try {
+    const response = await fetch(`${BASE_URL}/tasks`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+      },
+      body: task,
+    });
+
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      throw new Error(`Error ${response.status}: ${errorMessage}`);
+    }
+  } catch (error) {
+    console.error("Failed to post task:", error);
+    throw error;
+  }
+};
