@@ -6,47 +6,9 @@ import {
 } from "../../services/api";
 import { Comment, Status, Task } from "../Home/Home";
 import { useParams } from "react-router";
-
-import {
-  CardDepartment,
-  CardPriority,
-} from "../../components/taskCard/TaskCard.styled";
-import {
-  TaskInnerPageContainer,
-  TaskInnerPageBody,
-  TaskInnerPageMain,
-  PriorityAndDepartment,
-  TaskPageMainTitle,
-  TaskPageMainDescription,
-  TaskInnerPageDetails,
-  DetailsTitle,
-  DetailsTable,
-  DetailsTableRow,
-  TableRowLeft,
-  TableRowLeftText,
-  TableEmployeeRow,
-  TableEmployeeDep,
-  TableEmployeeImageAndName,
-  TableEmployeeName,
-  TableEmployeeImage,
-  CommentsContainer,
-  CommentsTexarea,
-  CommentsTexareaConteiner,
-  CommentsList,
-  CommentsTitle,
-  CommentsTitleContainer,
-  CommentsQuantity,
-  CommentsListContainer,
-  SingleCommentLayout,
-  SingleCommentTextWrapper,
-  SingleCommentText,
-  SingleCommentAuthor,
-  SingleCommentAuthorAvatar,
-  SingleCommentReplyButton,
-  CommentAndReplyWrapper,
-  ReplayLayout,
-} from "./TaskInnerPage.styled";
-import { OptionChooseButton } from "../../components/filtration/Filtration.styled";
+import { TaskInnerPageContainer } from "./TaskInnerPage.styled";
+import PageBody from "../../components/taskInnerPageComponents/PageBody";
+import CommentsSection from "../../components/taskInnerPageComponents/CommentsSection";
 
 export default function TaskInnerPage() {
   const [singleTask, setSingleTask] = useState<Task>();
@@ -55,6 +17,8 @@ export default function TaskInnerPage() {
   const [replyingToCommentId, setReplyingToCommentId] = useState<number | null>(
     null
   );
+  const [commentWritten, setCommentWritten] = useState<string>("");
+  const [replyWritten, setReplyWritten] = useState<string>("");
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -107,152 +71,39 @@ export default function TaskInnerPage() {
   };
 
   const formattedDate = formatDate(singleTask?.due_date);
-  console.log(singleTaskComments);
+
+  const handleComment = () => {
+    if (commentWritten.trim() === "") return;
+    console.log(commentWritten.trim());
+    setCommentWritten("");
+  };
+
+  const handleReply = () => {
+    if (replyWritten.trim() === "") return;
+    console.log(replyWritten.trim());
+    setReplyWritten("");
+  };
 
   return (
     <div>
       {singleTask ? (
         <TaskInnerPageContainer>
-          <TaskInnerPageBody>
-            <TaskInnerPageMain>
-              <PriorityAndDepartment>
-                <CardPriority $priority={singleTask.priority.name}>
-                  <img
-                    src={singleTask.priority.icon}
-                    alt={singleTask.priority.name}
-                  />
-                  {singleTask?.priority.name}
-                </CardPriority>
-                <CardDepartment $department={singleTask.department.name}>
-                  {singleTask?.department.name}
-                </CardDepartment>
-              </PriorityAndDepartment>
-              <TaskPageMainTitle>{singleTask?.name}</TaskPageMainTitle>
-              <TaskPageMainDescription>
-                {singleTask?.description}
-              </TaskPageMainDescription>
-            </TaskInnerPageMain>
-            <TaskInnerPageDetails>
-              <DetailsTitle>დავალების დეტალები</DetailsTitle>
-              <DetailsTable>
-                <DetailsTableRow>
-                  <TableRowLeft>
-                    <img src="/pie-chart.png" alt="pie-chart" />
-                    <TableRowLeftText>სტატუსი</TableRowLeftText>
-                  </TableRowLeft>
-                  <select>
-                    {statuses?.map((s) => (
-                      <option key={s.id}>{s.name}</option>
-                    ))}
-                  </select>
-                </DetailsTableRow>
-                <DetailsTableRow>
-                  <TableRowLeft>
-                    <img src="/man.png" alt="man" />
-                    <TableRowLeftText>თანამშრომელი</TableRowLeftText>
-                  </TableRowLeft>
-                  <TableEmployeeRow>
-                    <TableEmployeeDep>
-                      {singleTask.employee.department.name}
-                    </TableEmployeeDep>
-                    <TableEmployeeImageAndName>
-                      <TableEmployeeImage>
-                        <img
-                          style={{ width: "100%", objectFit: "cover" }}
-                          src={singleTask.employee.avatar}
-                          alt="emp"
-                        />
-                      </TableEmployeeImage>
-                      <TableEmployeeName>
-                        {singleTask.employee.name +
-                          " " +
-                          singleTask.employee.surname}
-                      </TableEmployeeName>
-                    </TableEmployeeImageAndName>
-                  </TableEmployeeRow>
-                </DetailsTableRow>
-                <DetailsTableRow>
-                  <TableRowLeft>
-                    <img src="/calendar.png" alt="calendar" />
-                    <TableRowLeftText>დავალების ვადა</TableRowLeftText>
-                  </TableRowLeft>
-                  <TableEmployeeName>{formattedDate}</TableEmployeeName>
-                </DetailsTableRow>
-              </DetailsTable>
-            </TaskInnerPageDetails>
-          </TaskInnerPageBody>
-          <CommentsContainer>
-            <CommentsTexareaConteiner>
-              <CommentsTexarea placeholder="დაწერე კომენტარი"></CommentsTexarea>
-              <OptionChooseButton $comments={"comments"}>
-                დააკომენტარე
-              </OptionChooseButton>
-            </CommentsTexareaConteiner>
-            <CommentsList>
-              <CommentsTitleContainer>
-                <CommentsTitle>კომენტარები</CommentsTitle>
-                <CommentsQuantity>
-                  {singleTaskComments?.length}
-                </CommentsQuantity>
-              </CommentsTitleContainer>
-              <CommentsListContainer>
-                {singleTaskComments?.map((c) => (
-                  <CommentAndReplyWrapper key={c.id}>
-                    <SingleCommentLayout>
-                      <SingleCommentAuthorAvatar>
-                        <img
-                          style={{ width: "100%", objectFit: "cover" }}
-                          src={c.author_avatar}
-                          alt="author avatar"
-                        />
-                      </SingleCommentAuthorAvatar>
-                      <SingleCommentTextWrapper>
-                        <SingleCommentAuthor>
-                          {c.author_nickname}
-                        </SingleCommentAuthor>
-                        <SingleCommentText>{c.text}</SingleCommentText>
-                        <SingleCommentReplyButton
-                          onClick={() =>
-                            setReplyingToCommentId(
-                              replyingToCommentId === c.id ? null : c.id
-                            )
-                          }
-                        >
-                          უპასუხე
-                        </SingleCommentReplyButton>
-                      </SingleCommentTextWrapper>
-                    </SingleCommentLayout>
-                    {replyingToCommentId === c.id && (
-                      <textarea placeholder="პასუხი"></textarea>
-                    )}
-                    {c.sub_comments && (
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: "20px",
-                        }}
-                      >
-                        {c.sub_comments.map((sc) => (
-                          <ReplayLayout key={sc.id}>
-                            <SingleCommentAuthorAvatar>
-                              <img src={sc.author_avatar} alt="reply avatar" />
-                            </SingleCommentAuthorAvatar>
-                            <SingleCommentTextWrapper>
-                              <SingleCommentAuthor>
-                                {sc.author_nickname}
-                              </SingleCommentAuthor>
-                              <SingleCommentText>{sc.text}</SingleCommentText>
-                            </SingleCommentTextWrapper>
-                          </ReplayLayout>
-                        ))}
-                      </div>
-                    )}
-                  </CommentAndReplyWrapper>
-                ))}
-              </CommentsListContainer>
-            </CommentsList>
-          </CommentsContainer>
+          <PageBody
+            singleTask={singleTask}
+            statuses={statuses}
+            formattedDate={formattedDate}
+          />
+          <CommentsSection
+            singleTaskComments={singleTaskComments}
+            replyingToCommentId={replyingToCommentId}
+            setReplyingToCommentId={setReplyingToCommentId}
+            handleComment={handleComment}
+            handleReply={handleReply}
+            commentWritten={commentWritten}
+            setCommentWritten={setCommentWritten}
+            replyWritten={replyWritten}
+            setReplyWritten={setReplyWritten}
+          />
         </TaskInnerPageContainer>
       ) : (
         "Loading..."

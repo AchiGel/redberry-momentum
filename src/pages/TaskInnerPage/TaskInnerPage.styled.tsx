@@ -256,9 +256,22 @@ export const CommentAndReplyWrapper = styled.div`
   gap: 20px;
 `;
 
-export const ReplayLayout = styled.div`
+export const ReplyLayout = styled.div`
   display: flex;
   align-items: flex-start;
   gap: 12px;
   margin-left: 53px;
+`;
+
+export const ReplyTextarea = styled.textarea`
+  width: 100%;
+  padding: 18px 20px 15px 20px;
+  border-radius: 10px;
+  border: 0.3px solid #adb5bd;
+  background: #fff;
+  color: #898989;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 350;
+  line-height: normal;
 `;
