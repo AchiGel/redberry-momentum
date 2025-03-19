@@ -151,7 +151,9 @@ export default function CreateAgentModal({
       const departmentId = departments.find(
         (d) => d.name === selectedDepartment
       )?.id;
-      formData.append("department_id", departmentId);
+      if (departmentId !== undefined) {
+        formData.append("department_id", departmentId.toString());
+      }
     }
     if (avatar) formData.append("avatar", avatar as Blob);
 
