@@ -3,6 +3,7 @@ import {
   getAllStatuses,
   getSingleTask,
   getSingleTaskComments,
+  postSingleTaskComment,
 } from "../../services/api";
 import { Comment, Status, Task } from "../Home/Home";
 import { useParams } from "react-router";
@@ -19,7 +20,10 @@ export default function TaskInnerPage() {
   );
   const [commentWritten, setCommentWritten] = useState<string>("");
   const [replyWritten, setReplyWritten] = useState<string>("");
+  const [updateComment, setUpdateComment] = useState(0);
   const { id } = useParams<{ id: string }>();
+
+  // ***************** ვტვირთავთ სერვერიდან წამოღებულ დავალებებს და სტატუსებს *********************//
 
   useEffect(() => {
     const loadTask = async () => {
@@ -32,16 +36,6 @@ export default function TaskInnerPage() {
     };
     loadTask();
 
-    const loadComments = async () => {
-      try {
-        const comments = await getSingleTaskComments(Number(id));
-        setSingleTaskComments(comments);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    loadComments();
-
     const loadStatuses = async () => {
       try {
         const statuses = await getAllStatuses();
@@ -52,6 +46,22 @@ export default function TaskInnerPage() {
     };
     loadStatuses();
   }, [id]);
+
+  // ***************** ვტვირთავთ სერვერიდან წამოღებულ კომენტარებს *********************//
+
+  useEffect(() => {
+    const loadComments = async () => {
+      try {
+        const comments = await getSingleTaskComments(Number(id));
+        setSingleTaskComments(comments);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    loadComments();
+  }, [id, updateComment]);
+
+  // ***************** თარიღის ფორმატირება *********************//
 
   const formatDate = (time: string | undefined) => {
     if (time) {
@@ -72,16 +82,40 @@ export default function TaskInnerPage() {
 
   const formattedDate = formatDate(singleTask?.due_date);
 
-  const handleComment = () => {
+  // ***************** მთავარი კომენტარების დაპოსტვის ფუნქცია *********************//
+
+  const handleComment = async (id: number) => {
     if (commentWritten.trim() === "") return;
-    console.log(commentWritten.trim());
-    setCommentWritten("");
+
+    const commentData = { text: commentWritten };
+
+    try {
+      await postSingleTaskComment(id, commentData);
+      setCommentWritten("");
+      setUpdateComment((prev) => prev + 1);
+    } catch (error) {
+      console.error("Error posting comment:", error);
+    }
   };
 
-  const handleReply = () => {
+  // ***************** ქვე-კომენტარების დაპოსტვის ფუნქცია *********************//
+
+  const handleReply = async (id: number) => {
     if (replyWritten.trim() === "") return;
-    console.log(replyWritten.trim());
-    setReplyWritten("");
+
+    const replyData = {
+      text: replyWritten,
+      parent_id: replyingToCommentId,
+    };
+
+    try {
+      await postSingleTaskComment(id, replyData);
+      setReplyWritten("");
+      setReplyingToCommentId(null);
+      setUpdateComment((prev) => prev + 1);
+    } catch (error) {
+      console.error("Error posting comment:", error);
+    }
   };
 
   return (
@@ -103,6 +137,7 @@ export default function TaskInnerPage() {
             setCommentWritten={setCommentWritten}
             replyWritten={replyWritten}
             setReplyWritten={setReplyWritten}
+            singleTask={singleTask}
           />
         </TaskInnerPageContainer>
       ) : (

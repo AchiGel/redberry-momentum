@@ -156,7 +156,15 @@ export default function CreateAgentModal({
   return (
     <AgentModalOverlay onClick={() => setIsOpen(!isOpen)} $isopen={isOpen}>
       <AgentModal onClick={(e) => e.stopPropagation()}>
-        <CancelButton onClick={() => setIsOpen(!isOpen)}>
+        <CancelButton
+          onClick={() => {
+            setIsOpen(!isOpen);
+            setName("");
+            setSurname("");
+            setSelectedDepartment("");
+            setAvatar(null);
+          }}
+        >
           <img src="./Cancel.png" alt="cancel" />
         </CancelButton>
         <AgentForm>

@@ -4,7 +4,13 @@ const BASE_URL = "https://momentum.redberryinternship.ge/api";
 // ***************** სერვერიდან მოგვაქვს ყველა სტატუსი *********************//
 
 export const getAllStatuses = async () => {
-  const response = await fetch(`${BASE_URL}/statuses`);
+  const response = await fetch(`${BASE_URL}/statuses`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${TOKEN}`,
+      "Content-Type": "application/json",
+    },
+  });
   const data = await response.json();
   return data;
 };
@@ -91,4 +97,30 @@ export const getSingleTaskComments = async (id: number) => {
   });
   const data = await response.json();
   return data;
+};
+
+// ***************** სერვერზე ვპოსტავთ კომენტარს *********************//
+
+export const postSingleTaskComment = async (
+  id: number,
+  comment: { text: string; parent_id?: number | null }
+) => {
+  try {
+    const response = await fetch(`${BASE_URL}/tasks/${id}/comments`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(comment),
+    });
+
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      throw new Error(`Error ${response.status}: ${errorMessage}`);
+    }
+  } catch (error) {
+    console.error("Failed to post comment:", error);
+    throw error;
+  }
 };
