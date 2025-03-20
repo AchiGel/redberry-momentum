@@ -81,12 +81,23 @@ export default function FiltersSelected({
       (dep) => dep.name === filterName
     );
     if (departmentToRemove) {
-      setSelectedFilters((prev) => ({
-        ...prev,
-        departments: prev.departments.filter(
+      setSelectedFilters((prev) => {
+        const updatedDepartments = prev.departments.filter(
           (id) => id !== departmentToRemove.id
-        ),
-      }));
+        );
+        // ***************** ლოკალურიდან დეპარტამენტების ამოშლა *********************//
+        localStorage.setItem(
+          "selectedFilters",
+          JSON.stringify({
+            ...prev,
+            departments: updatedDepartments,
+          })
+        );
+        return {
+          ...prev,
+          departments: updatedDepartments,
+        };
+      });
       setSelectedDepartments((prev) =>
         prev.filter((id) => id !== departmentToRemove.id)
       );
@@ -96,10 +107,23 @@ export default function FiltersSelected({
     // ***************** პრიორიტეტების შემოწმება *********************//
     const priorityToRemove = priorities.find((pri) => pri.name === filterName);
     if (priorityToRemove) {
-      setSelectedFilters((prev) => ({
-        ...prev,
-        priority: prev.priority.filter((id) => id !== priorityToRemove.id),
-      }));
+      setSelectedFilters((prev) => {
+        const updatedPriorities = prev.priority.filter(
+          (id) => id !== priorityToRemove.id
+        );
+        // ***************** ლოკალურიდან პრიორიტეტების ამოშლა *********************//
+        localStorage.setItem(
+          "selectedFilters",
+          JSON.stringify({
+            ...prev,
+            priority: updatedPriorities,
+          })
+        );
+        return {
+          ...prev,
+          priority: updatedPriorities,
+        };
+      });
       setSelectedPriority((prev) =>
         prev.filter((id) => id !== priorityToRemove.id)
       );
@@ -111,12 +135,34 @@ export default function FiltersSelected({
       (emp) => `${emp.name} ${emp.surname}` === filterName
     );
     if (employeeToRemove) {
-      setSelectedFilters((prev) => ({
-        ...prev,
-        employee: null,
-      }));
+      setSelectedFilters((prev) => {
+        // ***************** ლოკალურიდან თანამშრომლის ამოშლა *********************//
+        localStorage.setItem(
+          "selectedFilters",
+          JSON.stringify({
+            ...prev,
+            employee: null,
+          })
+        );
+        return {
+          ...prev,
+          employee: null,
+        };
+      });
       setSelectedEmployee(null);
     }
+  };
+
+  const handleFiltersClear = () => {
+    setSelectedFilters({
+      departments: [],
+      priority: [],
+      employee: null,
+    });
+    setSelectedDepartments([]);
+    setSelectedPriority([]);
+    setSelectedEmployee(null);
+    localStorage.removeItem("selectedFilters");
   };
 
   return (
@@ -127,18 +173,7 @@ export default function FiltersSelected({
           <FilterSelectedRemoveButton onClick={() => handleFilterRemove(f)} />
         </FilterSelected>
       ))}
-      <SelectedFiltersClear
-        onClick={() => {
-          setSelectedFilters({
-            departments: [],
-            priority: [],
-            employee: null,
-          });
-          setSelectedDepartments([]);
-          setSelectedPriority([]);
-          setSelectedEmployee(null);
-        }}
-      >
+      <SelectedFiltersClear onClick={handleFiltersClear}>
         გასუფთავება
       </SelectedFiltersClear>
     </FiltersSelectedLayout>

@@ -89,12 +89,32 @@ export default function Home() {
     employee: null,
   });
 
+  //******************* LocalStorage-დან არჩეული ფილტრების წამოღება პირველ რენდერზე *****************//
+
   useEffect(() => {
-    setSelectedFilters({
+    const savedFilters = localStorage.getItem("selectedFilters");
+    if (savedFilters) {
+      const parsedFilters = JSON.parse(savedFilters);
+      setSelectedDepartments(parsedFilters.departments || []);
+      setSelectedPriority(parsedFilters.priority || []);
+      setSelectedEmployee(parsedFilters.employee || null);
+    }
+  }, []);
+
+  useEffect(() => {
+    const filters = {
       departments: selectedDepartments,
       priority: selectedPriority,
       employee: selectedEmployee,
-    });
+    };
+    setSelectedFilters(filters);
+    //******************* LocalStorage-ში არჩეული ფილტრების შენახვა დათქმული პირობებით *****************//
+    if (
+      filters.departments.length > 0 ||
+      filters.priority.length > 0 ||
+      filters.employee
+    )
+      localStorage.setItem("selectedFilters", JSON.stringify(filters));
   }, [selectedDepartments, selectedPriority, selectedEmployee]);
 
   ///////////////////////////////////////////
