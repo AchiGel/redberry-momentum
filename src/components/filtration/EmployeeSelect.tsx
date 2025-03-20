@@ -10,6 +10,7 @@ import {
   OptionSelectButton,
   SelectLayout,
 } from "./Filtration.styled";
+import CustomCheckbox from "./CustomCheckbox";
 
 export default function EmployeeSelect({
   employees,
@@ -39,7 +40,10 @@ export default function EmployeeSelect({
   };
   return (
     <SelectLayout>
-      <OptionSelectButton onClick={() => setEmpIsOpen(!empIsOpen)}>
+      <OptionSelectButton
+        $isOpened={empIsOpen}
+        onClick={() => setEmpIsOpen(!empIsOpen)}
+      >
         თანამშრომელი
       </OptionSelectButton>
 
@@ -47,8 +51,7 @@ export default function EmployeeSelect({
         <OptionsDropDown>
           {employees.map((emp) => (
             <OptionLabel key={emp.id}>
-              <input
-                type="checkbox"
+              <CustomCheckbox
                 checked={preSelectedEmp === emp.id}
                 onChange={() => handleSelect(emp.id)}
               />

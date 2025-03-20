@@ -17,6 +17,10 @@ export const TaskCardLayout = styled.div<{ $layoutColor: number }>`
   flex-direction: column;
   gap: 28px;
   min-height: 217px;
+  &:hover {
+    cursor: pointer;
+    border-width: 2px;
+  }
 `;
 
 export const TaskCardUpper = styled.div`
@@ -31,8 +35,8 @@ export const CardPriorityAndDepartment = styled.div`
   gap: 10px;
 `;
 
-export const CardPriority = styled.div<{ $priority: string }>`
-  border-radius: 4px;
+export const CardPriority = styled.div<{ $priority: string; $page?: string }>`
+  border-radius: ${(props) => (props.$page === "taskInner" ? "3px" : "5px")};
   border: ${(props) =>
     props.$priority === "დაბალი"
       ? "0.5px solid #08A508"
@@ -46,10 +50,14 @@ export const CardPriority = styled.div<{ $priority: string }>`
       ? "#ffbe0b"
       : "#FA4D4D"};
   background: #fff;
-  padding: 4px;
+  padding: ${(props) => (props.$page === "taskInner" ? "4px 5px" : "4px")};
   display: flex;
   align-items: center;
   gap: 4px;
+  font-size: ${(props) => (props.$page === "taskInner" ? "16px" : "12px")};
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
 `;
 
 export const CardDepartment = styled.div<{ $department: string }>`

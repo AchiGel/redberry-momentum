@@ -8,6 +8,7 @@ import {
   OptionSelectButton,
   SelectLayout,
 } from "./Filtration.styled";
+import CustomCheckbox from "./CustomCheckbox";
 
 export default function DepartmentSelect({
   departments,
@@ -41,7 +42,10 @@ export default function DepartmentSelect({
 
   return (
     <SelectLayout>
-      <OptionSelectButton onClick={() => setDepIsOpen(!depIsOpen)}>
+      <OptionSelectButton
+        $isOpened={depIsOpen}
+        onClick={() => setDepIsOpen(!depIsOpen)}
+      >
         დეპარტამენტი
       </OptionSelectButton>
 
@@ -49,8 +53,8 @@ export default function DepartmentSelect({
         <OptionsDropDown>
           {departments.map((dept) => (
             <OptionLabel key={dept.id}>
-              <input
-                type="checkbox"
+              <CustomCheckbox
+                deptId={dept.id}
                 checked={preSelectedDeps.includes(dept.id)}
                 onChange={() => handleCheckboxChange(dept.id)}
               />

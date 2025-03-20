@@ -243,6 +243,7 @@ export const SingleCommentReplyButton = styled.button`
   display: flex;
   gap: 6px;
   align-items: center;
+  transition: all 0.3s ease;
   &::before {
     content: url("./Left_2.png");
     width: 14px;
@@ -250,6 +251,7 @@ export const SingleCommentReplyButton = styled.button`
   }
   &:hover {
     cursor: pointer;
+    filter: brightness(150%);
   }
 `;
 

@@ -8,6 +8,7 @@ import {
   OptionSelectButton,
   SelectLayout,
 } from "./Filtration.styled";
+import CustomCheckbox from "./CustomCheckbox";
 
 export default function PrioritySelect({
   priorities,
@@ -42,7 +43,10 @@ export default function PrioritySelect({
 
   return (
     <SelectLayout>
-      <OptionSelectButton onClick={() => setPriIsOpen(!priIsOpen)}>
+      <OptionSelectButton
+        $isOpened={priIsOpen}
+        onClick={() => setPriIsOpen(!priIsOpen)}
+      >
         პრიორიტეტი
       </OptionSelectButton>
 
@@ -50,8 +54,7 @@ export default function PrioritySelect({
         <OptionsDropDown>
           {priorities.map((prior) => (
             <OptionLabel key={prior.id}>
-              <input
-                type="checkbox"
+              <CustomCheckbox
                 checked={preSelectedPris.includes(prior.id)}
                 onChange={() => handleCheckboxChange(prior.id)}
               />

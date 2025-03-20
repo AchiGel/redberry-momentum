@@ -41,7 +41,7 @@ export default function PageBody({
     <TaskInnerPageBody>
       <TaskInnerPageMain>
         <PriorityAndDepartment>
-          <CardPriority $priority={singleTask.priority.name}>
+          <CardPriority $page="taskInner" $priority={singleTask.priority.name}>
             <img
               src={singleTask.priority.icon}
               alt={singleTask.priority.name}

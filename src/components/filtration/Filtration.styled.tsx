@@ -14,10 +14,10 @@ export const SelectLayout = styled.div`
   display: inline-block;
 `;
 
-export const OptionSelectButton = styled.button`
+export const OptionSelectButton = styled.button<{ $isOpened?: boolean }>`
   padding: 10px 18px;
   border-radius: 10px;
-  color: #0d0f10;
+  color: ${(props) => (props.$isOpened ? "#8338EC" : "#0d0f10")};
   text-align: center;
   font-size: 16px;
   font-style: normal;
@@ -32,6 +32,14 @@ export const OptionSelectButton = styled.button`
   &::after {
     content: url("/arrow_down.png");
     height: 24px;
+    transform: ${(props) => (props.$isOpened ? "rotate(180deg)" : "")};
+    filter: ${(props) =>
+      props.$isOpened
+        ? "invert(20%) sepia(56%) saturate(7252%) hue-rotate(262deg) brightness(103%) contrast(85%)"
+        : ""};
+  }
+  &:hover {
+    cursor: pointer;
   }
 `;
 
@@ -131,6 +139,9 @@ export const FilterSelectedRemoveButton = styled.button`
   border: none;
   outline: none;
   background-color: transparent;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const SelectedFiltersClear = styled.button`
@@ -145,4 +156,7 @@ export const SelectedFiltersClear = styled.button`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  &:hover {
+    cursor: pointer;
+  }
 `;
