@@ -27,9 +27,10 @@ import PrioritySelect from "../../components/createTaskPageComponent/PrioritySel
 import DepartmentSelect from "../../components/createTaskPageComponent/DepartmentSelect";
 import EmployeeSelect from "../../components/createTaskPageComponent/EmployeeSelect";
 import { DateInput } from "../../components/createTaskPageComponent/StatusesSelect.styled";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 export default function CreateTaskPage() {
+  const location = useLocation();
   const navigate = useNavigate();
   //******************** სერვერიდან წამოღებული მონაცემები *******************//
 
@@ -52,6 +53,12 @@ export default function CreateTaskPage() {
   const [selectedDepartment, setSelectedDepartment] = useState<string>("");
   const [selectedEmployee, setSelectedEmployee] = useState<Employee>();
   const [selectedDate, setSelectedDate] = useState<string>("");
+
+  // ***************** localStorage-ში მთავარი გვერდის ფილტრების გასუფთავება *********************//
+
+  useEffect(() => {
+    localStorage.removeItem("selectedFilters");
+  }, [location.pathname]);
 
   //******************** ხვალინდელი (შემდგომი) დღის განსაზღვრის ფუნქცია კალენდრისთვის *******************//
 

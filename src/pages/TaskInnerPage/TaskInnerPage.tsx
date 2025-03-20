@@ -6,12 +6,14 @@ import {
   postSingleTaskComment,
 } from "../../services/api";
 import { Comment, Status, Task } from "../Home/Home";
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { TaskInnerPageContainer } from "./TaskInnerPage.styled";
 import PageBody from "../../components/taskInnerPageComponents/PageBody";
 import CommentsSection from "../../components/taskInnerPageComponents/CommentsSection";
 
 export default function TaskInnerPage() {
+  const location = useLocation();
+
   const [singleTask, setSingleTask] = useState<Task>();
   const [singleTaskComments, setSingleTaskComments] = useState<Comment[]>();
   const [statuses, setStatuses] = useState<Status[]>();
@@ -23,6 +25,12 @@ export default function TaskInnerPage() {
   const [updateComment, setUpdateComment] = useState(0);
   const { id } = useParams<{ id: string }>();
   const [selectedStatus, setSelectedStatus] = useState<string>("");
+
+  // ***************** localStorage-ში მთავარი გვერდის ფილტრების გასუფთავება *********************//
+
+  useEffect(() => {
+    localStorage.removeItem("selectedFilters");
+  }, [location.pathname]);
 
   // ***************** ვტვირთავთ სერვერიდან წამოღებულ დავალებებს და სტატუსებს *********************//
 
