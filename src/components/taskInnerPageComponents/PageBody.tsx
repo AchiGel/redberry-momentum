@@ -25,18 +25,38 @@ import {
   SelectOption,
 } from "../createTaskPageComponent/StatusesSelect.styled";
 import { CardPriority, CardDepartment } from "../taskCard/TaskCard.styled";
+import { updateStatus } from "../../services/api";
 
 export default function PageBody({
   singleTask,
   statuses,
   formattedDate,
+  selectedStatus,
+  setSelectedStatus,
 }: {
   singleTask: Task;
   statuses: Status[] | undefined;
   formattedDate: string;
+  selectedStatus: string;
+  setSelectedStatus: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const [statusIsOpened, setStatusIsOpened] = useState<boolean>(false);
-  const [selectedStatus, setSelectedStatus] = useState<string>("");
+
+  // ***************** დავალებისთვის სტატუსის შეცვლა *********************//
+
+  const handleStatusChange = async (
+    id: number,
+    status: { id: number; name: string }
+  ) => {
+    try {
+      await updateStatus(id, { status_id: status.id });
+      setSelectedStatus(status.name);
+      setStatusIsOpened(false);
+    } catch (error) {
+      console.log("Error putting status:", error);
+    }
+  };
+
   return (
     <TaskInnerPageBody>
       <TaskInnerPageMain>
@@ -92,10 +112,7 @@ export default function PageBody({
                   {statuses?.map((option) => (
                     <SelectOption
                       key={option.id}
-                      onClick={() => {
-                        setSelectedStatus(option.name);
-                        setStatusIsOpened(false);
-                      }}
+                      onClick={() => handleStatusChange(singleTask.id, option)}
                     >
                       {option.name}
                     </SelectOption>

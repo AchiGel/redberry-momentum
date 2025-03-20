@@ -168,3 +168,29 @@ export const postNewTask = async (task: FormData) => {
     throw error;
   }
 };
+
+// ***************** სერვერზე ვცვლით დავალების სტატუსს *********************//
+
+export const updateStatus = async (
+  id: number,
+  status: { status_id: number }
+) => {
+  try {
+    const response = await fetch(`${BASE_URL}/tasks/${id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(status),
+    });
+
+    if (!response.ok) {
+      const errorMessage = await response.text();
+      throw new Error(`Error ${response.status}: ${errorMessage}`);
+    }
+  } catch (error) {
+    console.error("Failed to put status:", error);
+    throw error;
+  }
+};

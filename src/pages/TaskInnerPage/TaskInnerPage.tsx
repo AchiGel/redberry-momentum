@@ -22,6 +22,7 @@ export default function TaskInnerPage() {
   const [replyWritten, setReplyWritten] = useState<string>("");
   const [updateComment, setUpdateComment] = useState(0);
   const { id } = useParams<{ id: string }>();
+  const [selectedStatus, setSelectedStatus] = useState<string>("");
 
   // ***************** ვტვირთავთ სერვერიდან წამოღებულ დავალებებს და სტატუსებს *********************//
 
@@ -126,6 +127,8 @@ export default function TaskInnerPage() {
             singleTask={singleTask}
             statuses={statuses}
             formattedDate={formattedDate}
+            selectedStatus={selectedStatus}
+            setSelectedStatus={setSelectedStatus}
           />
           <CommentsSection
             singleTaskComments={singleTaskComments}
