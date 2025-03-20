@@ -27,8 +27,10 @@ import PrioritySelect from "../../components/createTaskPageComponent/PrioritySel
 import DepartmentSelect from "../../components/createTaskPageComponent/DepartmentSelect";
 import EmployeeSelect from "../../components/createTaskPageComponent/EmployeeSelect";
 import { DateInput } from "../../components/createTaskPageComponent/StatusesSelect.styled";
+import { useNavigate } from "react-router";
 
 export default function CreateTaskPage() {
+  const navigate = useNavigate();
   //******************** სერვერიდან წამოღებული მონაცემები *******************//
 
   const [statuses, setStatuses] = useState<Status[]>([]);
@@ -230,6 +232,7 @@ export default function CreateTaskPage() {
       setEmployeeIsTouched(false);
       setDateIsTouched(false);
       console.log("task posted successfuly");
+      navigate("/");
     } catch (error) {
       console.log("error posting task", error);
     }
