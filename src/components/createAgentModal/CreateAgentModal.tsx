@@ -196,6 +196,7 @@ export default function CreateAgentModal({
                   id="name"
                   name="name"
                   type="text"
+                  $modal={true}
                   value={name}
                   onChange={(e) => {
                     setName(e.target.value);
@@ -238,6 +239,7 @@ export default function CreateAgentModal({
                 <FormInput
                   type="text"
                   id="surname"
+                  $modal={true}
                   name="surname"
                   value={surname}
                   onChange={(e) => {

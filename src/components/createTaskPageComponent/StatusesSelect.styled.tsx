@@ -68,6 +68,9 @@ export const SelectOption = styled.div`
   font-style: normal;
   font-weight: 300;
   line-height: normal;
+  &:hover {
+    background-color: #f8f9fa;
+  }
 `;
 
 export const EmployeeAddButton = styled.button`
@@ -92,6 +95,7 @@ export const EmployeeAddButton = styled.button`
   }
   &:hover {
     cursor: pointer;
+    background-color: #f8f9fa;
   }
 `;
 

@@ -5,6 +5,7 @@ import {
   FormInput,
   Validation,
   AddButton,
+  FormTextarea,
 } from "../../components/createAgentModal/CreateAgentModal.styled";
 import {
   FormLayout,
@@ -137,10 +138,11 @@ export default function CreateTaskPage() {
   const [descriptionIsTouched, setDescriptionIsTouched] = useState(false);
 
   const descriptionValidation = () => {
-    if (description.trim().split(" ").length < 4 || description.length > 255) {
-      return false;
-    }
-    return true;
+    if (description === "") return true;
+
+    return (
+      description.trim().split(" ").length >= 4 && description.length < 255
+    );
   };
 
   const descriptionIsValid = descriptionValidation();
@@ -184,7 +186,7 @@ export default function CreateTaskPage() {
 
     if (
       !nameIsValid ||
-      !descriptionIsValid ||
+      (description && !descriptionIsValid) ||
       !priorityIsValid ||
       !statusIsValid ||
       !departmentIsValid ||
@@ -192,7 +194,6 @@ export default function CreateTaskPage() {
       !dateIsValid
     ) {
       setNameIsTouched(true);
-      setDescriptionIsTouched(true);
       setPriorityIsTouched(true);
       setStatusIsTouched(true);
       setDepartmentIsTouched(true);
@@ -302,17 +303,14 @@ export default function CreateTaskPage() {
               </InputWrapper>
               <InputWrapper>
                 <FormLabel htmlFor="description">აღწერა</FormLabel>
-                <FormInput
+                <FormTextarea
                   $validate={
-                    !descriptionIsTouched
-                      ? "1px solid #CED4DA"
-                      : descriptionIsValid
+                    descriptionIsValid
                       ? "1px solid #CED4DA"
                       : "1px solid #FA4D4D"
                   }
                   id="description"
                   name="description"
-                  type="textarea"
                   value={description}
                   onChange={(e) => {
                     setDescription(e.target.value);
@@ -320,12 +318,12 @@ export default function CreateTaskPage() {
                     if (e.target.value.trim() === "")
                       setDescriptionIsTouched(false);
                   }}
-                />
+                ></FormTextarea>
                 <Validation
                   $validate={
                     !descriptionIsTouched
                       ? "#6C757D"
-                      : descriptionIsValid
+                      : descriptionIsValid && descriptionIsTouched
                       ? "#08A508"
                       : "#FA4D4D"
                   }
@@ -406,7 +404,7 @@ export default function CreateTaskPage() {
                   validate={employeeIsTouched && !employeeIsValid}
                 />
               </InputWrapper>
-              <InputWrapper>
+              <InputWrapper style={{ marginTop: "90px" }}>
                 <FormLabel htmlFor="date">დედლაინი</FormLabel>
                 <DateInput
                   required

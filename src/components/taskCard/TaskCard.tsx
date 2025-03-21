@@ -66,7 +66,7 @@ export default function TaskCard({
         <TaskCardMiddle>
           <TaskName>{name}</TaskName>
           <TaskDescr>
-            {descr.length > 100 ? descr.slice(0, 100) + "..." : descr}
+            {descr && descr.length > 100 ? descr.slice(0, 100) + "..." : descr}
           </TaskDescr>
         </TaskCardMiddle>
         <TaskCardBottom>

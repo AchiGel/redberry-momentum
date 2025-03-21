@@ -67,12 +67,12 @@ export const FormLabel = styled.label`
   }
 `;
 
-export const FormInput = styled.input<{ $validate?: string }>`
-  padding: 10px;
+export const FormInput = styled.input<{ $validate?: string; $modal?: boolean }>`
+  padding: ${(props) => (props.$modal ? "10px" : "14px")};
   border-radius: 6px;
   border: ${(props) => props.$validate};
   outline: none;
-  margin-bottom: 6px;
+  margin-bottom: ${(props) => (props.$modal ? "6px" : "4px")};
 `;
 
 export const Validation = styled.span<{ $validate?: string }>`
@@ -139,4 +139,14 @@ export const AddButton = styled.button`
     cursor: pointer;
     background: #b588f4;
   }
+`;
+
+export const FormTextarea = styled.textarea<{ $validate?: string }>`
+  padding: 14px;
+  border-radius: 5px;
+  border: ${(props) => props.$validate};
+  outline: none;
+  margin-bottom: 4px;
+  resize: none;
+  min-height: 133px;
 `;

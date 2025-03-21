@@ -31,12 +31,13 @@ export const FormLeftColumn = styled.div`
 export const FormLeftColumnRow = styled.div`
   display: flex;
   gap: 32px;
+  flex-wrap: wrap;
 `;
 
 export const FormRightColumn = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 55px;
+  gap: 93px;
   width: 50%;
 `;
 
