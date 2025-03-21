@@ -128,7 +128,7 @@ export default function TaskInnerPage() {
   };
 
   return (
-    <div>
+    <div style={{ marginBottom: "150px" }}>
       {singleTask ? (
         <TaskInnerPageContainer>
           <PageBody

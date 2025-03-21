@@ -28,9 +28,12 @@ import PrioritySelect from "../../components/createTaskPageComponent/PrioritySel
 import DepartmentSelect from "../../components/createTaskPageComponent/DepartmentSelect";
 import EmployeeSelect from "../../components/createTaskPageComponent/EmployeeSelect";
 import { DateInput } from "../../components/createTaskPageComponent/StatusesSelect.styled";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate, useOutletContext } from "react-router";
 
 export default function CreateTaskPage() {
+  ////////////////////////////////////////////
+  const { updateEmployees } = useOutletContext<{ updateEmployees: number }>();
+  /////////////////////////////////////////////
   const location = useLocation();
   const navigate = useNavigate();
   //******************** სერვერიდან წამოღებული მონაცემები *******************//
@@ -56,6 +59,17 @@ export default function CreateTaskPage() {
     Employee | undefined
   >(undefined);
   const [selectedDate, setSelectedDate] = useState<string>("");
+  /////////////////////////////////////////////////////////////////
+
+  const [openDropdown, setOpenDropdown] = useState<
+    "department" | "employee" | null
+  >(null);
+
+  const toggleDropdown = (dropdown: "department" | "employee") => {
+    setOpenDropdown((prev) => (prev === dropdown ? null : dropdown));
+  };
+
+  ///////////////////////////////////////////////////////////////
 
   // ***************** localStorage-ში მთავარი გვერდის ფილტრების გასუფთავება *********************//
 
@@ -167,7 +181,7 @@ export default function CreateTaskPage() {
       }
     };
     loadEmployees();
-  }, []);
+  }, [updateEmployees]);
 
   //******************** ვალიდაციის ფუნქციები *******************//
 
@@ -440,6 +454,8 @@ export default function CreateTaskPage() {
                   setIsDisabled={setIsDisabled}
                   employees={employees}
                   setFilteredEmployees={setFilteredEmployees}
+                  depIsOpen={openDropdown === "department"}
+                  setDepIsOpen={() => toggleDropdown("department")}
                 />
               </InputWrapper>
               <InputWrapper>
@@ -456,6 +472,8 @@ export default function CreateTaskPage() {
                   }}
                   isDisabled={isDisabled}
                   validate={employeeIsTouched && !employeeIsValid}
+                  empIsOpen={openDropdown === "employee"}
+                  setEmpIsOpen={() => toggleDropdown("employee")}
                 />
               </InputWrapper>
               <InputWrapper style={{ marginTop: "90px" }}>

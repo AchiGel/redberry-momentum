@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Employee } from "../../pages/Home/Home";
 import {
   EmployeeAddButton,
@@ -16,6 +16,8 @@ export default function EmployeeSelect({
   isDisabled,
   id,
   validate,
+  empIsOpen,
+  setEmpIsOpen,
 }: {
   employees: Employee[];
   selectedEmployee: Employee | undefined;
@@ -25,11 +27,12 @@ export default function EmployeeSelect({
   isDisabled: boolean;
   id: string;
   validate: boolean;
+  empIsOpen: boolean;
+  setEmpIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const modalOpen: React.Dispatch<React.SetStateAction<boolean>> =
-    useOutletContext();
-
-  const [isOpen, setIsOpen] = useState(false);
+  const { setModalIsOpen } = useOutletContext<{
+    setModalIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  }>();
 
   useEffect(() => {
     if (
@@ -42,7 +45,7 @@ export default function EmployeeSelect({
 
   const handleSelect = (option: Employee) => {
     setSelectedEmployee(option);
-    setIsOpen(false);
+    setEmpIsOpen(false);
   };
 
   return (
@@ -53,8 +56,8 @@ export default function EmployeeSelect({
         type="button"
         disabled={isDisabled}
         $isDisabled={isDisabled}
-        $isOpen={isOpen}
-        onClick={() => setIsOpen(!isOpen)}
+        $isOpen={empIsOpen}
+        onClick={() => setEmpIsOpen(!empIsOpen)}
       >
         {selectedEmployee ? (
           <img
@@ -72,12 +75,12 @@ export default function EmployeeSelect({
           ? `${selectedEmployee.name} ${selectedEmployee.surname}`
           : ""}
       </SelectButton>
-      {isOpen && (
+      {empIsOpen && (
         <SelectDropDown>
           <EmployeeAddButton
             onClick={(e) => {
               e.preventDefault();
-              modalOpen(true);
+              setModalIsOpen(true);
             }}
           >
             დაამატე თანამშრომელი

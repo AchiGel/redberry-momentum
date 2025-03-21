@@ -131,6 +131,9 @@ export const CommentsContainer = styled.div`
   gap: 66px;
   min-width: 741px;
   margin-top: 59px;
+  @media (max-width: 1440px) {
+    min-width: 50%;
+  }
 `;
 
 export const CommentsTexarea = styled.textarea`
@@ -156,6 +159,8 @@ export const CommentsList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 40px;
+  max-height: 700px;
+  overflow-y: scroll;
 `;
 
 export const CommentsTitle = styled.h3`

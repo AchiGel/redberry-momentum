@@ -28,9 +28,11 @@ import AgentAvatar from "./AgentAvatar";
 export default function CreateAgentModal({
   isOpen,
   setIsOpen,
+  setUpdateEmployees,
 }: {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setUpdateEmployees: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const [depIsOpen, setDepIsOpen] = useState<boolean>(false);
   //******************** დეპარტამენტები *******************//
@@ -58,6 +60,21 @@ export default function CreateAgentModal({
     return true;
   };
 
+  const nameMinLenghtValidation = () => {
+    if (name.trim().length < 2) return false;
+
+    return true;
+  };
+
+  const nameMaxLenghtValidation = () => {
+    if (name.trim().length > 255) return false;
+
+    return true;
+  };
+
+  const nameMinValidate = nameMinLenghtValidation();
+  const nameMaxValidate = nameMaxLenghtValidation();
+
   const nameIsValid = nameValidation();
 
   //******************** გვარის ვალიდაცია *******************//
@@ -75,6 +92,21 @@ export default function CreateAgentModal({
     }
     return true;
   };
+
+  const surnameMinLenghtValidation = () => {
+    if (surname.trim().length < 2) return false;
+
+    return true;
+  };
+
+  const surnameMaxLenghtValidation = () => {
+    if (name.trim().length > 255) return false;
+
+    return true;
+  };
+
+  const surnameMinValidate = surnameMinLenghtValidation();
+  const surnameMaxValidate = surnameMaxLenghtValidation();
 
   const surnameIsValid = surnameValidation();
 
@@ -157,7 +189,11 @@ export default function CreateAgentModal({
       !nameIsValid ||
       !surnameIsValid ||
       !departmentIsValid ||
-      !avatarIsValid
+      !avatarIsValid ||
+      !nameMinValidate ||
+      !nameMaxValidate ||
+      !surnameMinValidate ||
+      !surnameMaxValidate
     ) {
       setNameIsTouched(true);
       setSurnameIsTouched(true);
@@ -189,7 +225,11 @@ export default function CreateAgentModal({
       setSurnameIsTouched(false);
       setDepartmentIsTouched(false);
       setAvatarIsTouched(false);
+      ////////////////////////////////
+      setUpdateEmployees((prev) => prev + 1);
+      //////////////////////////////////
       console.log("employee posted successfuly");
+      setIsOpen(false);
     } catch (error) {
       console.log("error posting employee", error);
     }
@@ -238,7 +278,7 @@ export default function CreateAgentModal({
                   $validate={
                     !nameIsTouched
                       ? "#6C757D"
-                      : nameIsValid
+                      : nameIsValid || nameMinValidate
                       ? "#08A508"
                       : "#FA4D4D"
                   }
@@ -249,7 +289,7 @@ export default function CreateAgentModal({
                   $validate={
                     !nameIsTouched
                       ? "#6C757D"
-                      : nameIsValid
+                      : nameIsValid || nameMaxValidate
                       ? "#08A508"
                       : "#FA4D4D"
                   }
@@ -283,7 +323,7 @@ export default function CreateAgentModal({
                   $validate={
                     !surnameIsTouched
                       ? "#6C757D"
-                      : surnameIsValid
+                      : surnameIsValid || surnameMinValidate
                       ? "#08A508"
                       : "#FA4D4D"
                   }
@@ -294,7 +334,7 @@ export default function CreateAgentModal({
                   $validate={
                     !surnameIsTouched
                       ? "#6C757D"
-                      : surnameIsValid
+                      : surnameIsValid || surnameMaxValidate
                       ? "#08A508"
                       : "#FA4D4D"
                   }

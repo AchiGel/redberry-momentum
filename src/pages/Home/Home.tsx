@@ -10,6 +10,7 @@ import {
 import Tasks from "../../components/tasks/Tasks";
 import FiltersSelected from "../../components/filtration/FiltersSelected";
 import { FormTitle } from "../CreateTaskPage/CreateTaskPage.styled";
+import { useOutletContext } from "react-router";
 
 export interface Status {
   id: number;
@@ -67,6 +68,9 @@ export interface SubComment {
 }
 
 export default function Home() {
+  //////////////////////////////////////////////
+  const { updateEmployees } = useOutletContext<{ updateEmployees: number }>();
+  //////////////////////////////////////////////
   const [statuses, setStatuses] = useState<Status[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [departments, setDepartments] = useState<Department[]>([]);
@@ -174,7 +178,7 @@ export default function Home() {
       }
     };
     loadEmployees();
-  }, []);
+  }, [updateEmployees]);
 
   return (
     <div>

@@ -11,9 +11,11 @@ import {
 export default function Header({
   isOpen,
   setIsOpen,
+  setUpdateEmployees,
 }: {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setUpdateEmployees: React.Dispatch<React.SetStateAction<number>>;
 }) {
   return (
     <HeaderWrapper>
@@ -32,7 +34,11 @@ export default function Header({
           <CreateNewTaskButton>შექმენი ახალი დავალება</CreateNewTaskButton>
         </Link>
       </HeaderButtons>
-      <CreateAgentModal isOpen={isOpen} setIsOpen={setIsOpen} />
+      <CreateAgentModal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        setUpdateEmployees={setUpdateEmployees}
+      />
     </HeaderWrapper>
   );
 }

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Department, Employee } from "../../pages/Home/Home";
 import {
   SelectButton,
@@ -16,6 +15,8 @@ export default function DepartmentSelect({
   setFilteredEmployees,
   id,
   validate,
+  depIsOpen,
+  setDepIsOpen,
 }: {
   departments: Department[];
   selectedDepartment: string;
@@ -25,9 +26,9 @@ export default function DepartmentSelect({
   setFilteredEmployees: React.Dispatch<React.SetStateAction<Employee[]>>;
   id: string;
   validate: boolean;
+  depIsOpen: boolean;
+  setDepIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const [isOpen, setIsOpen] = useState(false);
-
   const handleSelect = (option: Department) => {
     setSelectedDepartment(option.name);
 
@@ -38,7 +39,7 @@ export default function DepartmentSelect({
     setFilteredEmployees(filteredEmployees);
 
     setIsDisabled(false);
-    setIsOpen(false);
+    setDepIsOpen(false);
   };
 
   return (
@@ -47,8 +48,8 @@ export default function DepartmentSelect({
         $validate={validate}
         id={id}
         type="button"
-        $isOpen={isOpen}
-        onClick={() => setIsOpen(!isOpen)}
+        $isOpen={depIsOpen}
+        onClick={() => setDepIsOpen(!depIsOpen)}
       >
         {selectedDepartment ? (
           selectedDepartment
@@ -58,7 +59,7 @@ export default function DepartmentSelect({
           </span>
         )}
       </SelectButton>
-      {isOpen && (
+      {depIsOpen && (
         <SelectDropDown>
           {departments.map((option) => (
             <SelectOption key={option.id} onClick={() => handleSelect(option)}>
