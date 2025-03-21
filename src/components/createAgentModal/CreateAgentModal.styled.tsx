@@ -52,7 +52,7 @@ export const FormTitle = styled.h2`
   line-height: normal;
 `;
 
-export const FormLabel = styled.label`
+export const FormLabel = styled.label<{ $description?: boolean }>`
   color: #343a40;
   font-size: 14px;
   font-style: normal;
@@ -61,7 +61,8 @@ export const FormLabel = styled.label`
   margin-bottom: 3px;
   position: relative;
   &::after {
-    content: url("./Asterisk.png");
+    content: ${(props) =>
+      props.$description ? "url()" : 'url("./Asterisk.png")'};
     position: absolute;
     top: -4px;
   }

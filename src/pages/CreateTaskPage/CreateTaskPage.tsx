@@ -302,7 +302,9 @@ export default function CreateTaskPage() {
                 </Validation>
               </InputWrapper>
               <InputWrapper>
-                <FormLabel htmlFor="description">აღწერა</FormLabel>
+                <FormLabel $description={true} htmlFor="description">
+                  აღწერა
+                </FormLabel>
                 <FormTextarea
                   $validate={
                     descriptionIsValid
