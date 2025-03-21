@@ -52,7 +52,9 @@ export default function CreateTaskPage() {
   const [selectedStatus, setSelectedStatus] = useState<string>("");
   const [selectedPriority, setSelectedPriority] = useState<string>("");
   const [selectedDepartment, setSelectedDepartment] = useState<string>("");
-  const [selectedEmployee, setSelectedEmployee] = useState<Employee>();
+  const [selectedEmployee, setSelectedEmployee] = useState<
+    Employee | undefined
+  >(undefined);
   const [selectedDate, setSelectedDate] = useState<string>("");
 
   // ***************** localStorage-ში მთავარი გვერდის ფილტრების გასუფთავება *********************//
@@ -60,6 +62,55 @@ export default function CreateTaskPage() {
   useEffect(() => {
     localStorage.removeItem("selectedFilters");
   }, [location.pathname]);
+
+  // ***************** localStorage-დან დავალების ველების წამოღება პირველ რენდერზე *********************//
+
+  useEffect(() => {
+    const savedFormFields = localStorage.getItem("form_fields");
+    if (savedFormFields) {
+      const parsedFields = JSON.parse(savedFormFields);
+      setName(parsedFields.name || "");
+      setDescription(parsedFields.description || "");
+      setSelectedStatus(parsedFields.status || "");
+      setSelectedDepartment(parsedFields.department || "");
+      setSelectedPriority(parsedFields.priority || "");
+      setSelectedEmployee(parsedFields.employee || undefined);
+      setSelectedDate(parsedFields.due_date || "");
+    }
+  }, []);
+
+  // ***************** localStorage-ში დავალების დამატების ველების შენახვა *********************//
+
+  useEffect(() => {
+    const formFields = {
+      name: name,
+      description: description,
+      status: selectedStatus,
+      department: selectedDepartment,
+      priority: selectedPriority,
+      employee: selectedEmployee,
+      due_date: selectedDate,
+    };
+    //******************* LocalStorage-ში არჩეული ველების შენახვა დათქმული პირობებით *****************//
+    if (
+      formFields.name !== "" ||
+      formFields.description !== "" ||
+      formFields.status !== "" ||
+      formFields.department !== "" ||
+      formFields.priority !== "" ||
+      formFields.employee ||
+      formFields.due_date !== ""
+    )
+      localStorage.setItem("form_fields", JSON.stringify(formFields));
+  }, [
+    name,
+    description,
+    selectedDate,
+    selectedDepartment,
+    selectedEmployee,
+    selectedStatus,
+    selectedPriority,
+  ]);
 
   //******************** ხვალინდელი (შემდგომი) დღის განსაზღვრის ფუნქცია კალენდრისთვის *******************//
 
@@ -240,6 +291,7 @@ export default function CreateTaskPage() {
       setEmployeeIsTouched(false);
       setDateIsTouched(false);
       console.log("task posted successfuly");
+      localStorage.removeItem("form_fields");
       navigate("/");
     } catch (error) {
       console.log("error posting task", error);
@@ -391,7 +443,7 @@ export default function CreateTaskPage() {
                 />
               </InputWrapper>
               <InputWrapper>
-                <FormLabel htmlFor="employee">
+                <FormLabel $disabled={isDisabled} htmlFor="employee">
                   პასუხისმგებელი თანამშრომელი
                 </FormLabel>
                 <EmployeeSelect

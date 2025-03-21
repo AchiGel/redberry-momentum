@@ -52,8 +52,11 @@ export const FormTitle = styled.h2`
   line-height: normal;
 `;
 
-export const FormLabel = styled.label<{ $description?: boolean }>`
-  color: #343a40;
+export const FormLabel = styled.label<{
+  $disabled?: boolean;
+  $description?: boolean;
+}>`
+  color: ${(props) => (props.$disabled ? "#ADB5BD" : "#343a40")};
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
