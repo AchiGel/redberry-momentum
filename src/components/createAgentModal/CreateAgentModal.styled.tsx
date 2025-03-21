@@ -22,12 +22,22 @@ export const AgentModal = styled.div`
   flex-direction: column;
   align-items: flex-end;
   gap: 37px;
+
+  @media (max-width: 1440px) {
+    padding: 20px 25px 30px 25px;
+    gap: 10px;
+  }
 `;
 
 export const CancelButton = styled.button`
   border: none;
   outline: none;
   background: transparent;
+  transition: all 0.3s ease;
+  &:hover {
+    cursor: pointer;
+    transform: scale(0.9);
+  }
 `;
 
 export const AgentForm = styled.form`
@@ -41,6 +51,9 @@ export const FormFields = styled.div`
   flex-direction: column;
   gap: 45px;
   margin-bottom: 25px;
+  @media (max-width: 1440px) {
+    gap: 20px;
+  }
 `;
 
 export const FormTitle = styled.h2`
@@ -126,6 +139,11 @@ export const CancelButtonBottom = styled.button`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  transition: all 0.3s ease;
+  &:hover {
+    cursor: pointer;
+    border: 1px solid #b588f4;
+  }
 `;
 
 export const AddButton = styled.button`

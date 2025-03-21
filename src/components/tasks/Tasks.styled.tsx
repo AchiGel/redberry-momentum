@@ -5,6 +5,11 @@ export const TasksGrid = styled.div`
   grid-template-columns: repeat(4, 22.6%);
   gap: 52px;
   margin-bottom: 152px;
+
+  @media (max-width: 1440px) {
+    grid-template-columns: repeat(4, 24%);
+    gap: 15px;
+  }
 `;
 
 export const TasksColumn = styled.div`

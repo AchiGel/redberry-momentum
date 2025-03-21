@@ -15,9 +15,11 @@ import { useEffect, useState } from "react";
 export default function AgentAvatar({
   avatar,
   handleFileChange,
+  setAvatar,
 }: {
   avatar: File | null;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setAvatar: React.Dispatch<React.SetStateAction<File | null>>;
 }) {
   const [imagePrev, setImagePrev] = useState<string | null>(null);
 
@@ -48,6 +50,7 @@ export default function AgentAvatar({
       URL.revokeObjectURL(imagePrev);
     }
     setImagePrev(null);
+    setAvatar(null);
   };
 
   return (

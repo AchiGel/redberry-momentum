@@ -81,12 +81,28 @@ export default function CreateAgentModal({
   //******************** ავატარის ვალიდაცია *******************//
 
   const [avatar, setAvatar] = useState<File | null>(null);
+  const [avatarIsTouched, setAvatarIsTouched] = useState(false);
+
+  const avatarValidation = () => {
+    if (
+      !avatar ||
+      !avatar.type.startsWith("image/") ||
+      avatar.size > 600 * 1024
+    )
+      return false;
+    return true;
+  };
+
+  const avatarIsValid = avatarValidation();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAvatarIsTouched(true);
     const file = e.target.files?.[0];
 
-    if (!file || !file.type.startsWith("image/") || file.size > 600 * 1024)
+    if (!file || !file.type.startsWith("image/") || file.size > 600 * 1024) {
+      setAvatar(null);
       return;
+    }
 
     setAvatar(file);
   };
@@ -137,10 +153,16 @@ export default function CreateAgentModal({
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!nameIsValid || !surnameIsValid || !departmentIsValid || !avatar) {
+    if (
+      !nameIsValid ||
+      !surnameIsValid ||
+      !departmentIsValid ||
+      !avatarIsValid
+    ) {
       setNameIsTouched(true);
       setSurnameIsTouched(true);
       setDepartmentIsTouched(true);
+      setAvatarIsTouched(true);
       return;
     }
 
@@ -166,6 +188,7 @@ export default function CreateAgentModal({
       setNameIsTouched(false);
       setSurnameIsTouched(false);
       setDepartmentIsTouched(false);
+      setAvatarIsTouched(false);
       console.log("employee posted successfuly");
     } catch (error) {
       console.log("error posting employee", error);
@@ -284,7 +307,30 @@ export default function CreateAgentModal({
               <AgentAvatar
                 avatar={avatar}
                 handleFileChange={handleFileChange}
+                setAvatar={setAvatar}
               />
+              <Validation
+                $validate={
+                  !avatarIsTouched
+                    ? "#6C757D"
+                    : avatarIsValid
+                    ? "#08A508"
+                    : "#FA4D4D"
+                }
+              >
+                მაქსიმუმ 600kb
+              </Validation>
+              <Validation
+                $validate={
+                  !avatarIsTouched
+                    ? "#6C757D"
+                    : avatarIsValid
+                    ? "#08A508"
+                    : "#FA4D4D"
+                }
+              >
+                უნდა იყოს სურათის ტიპის
+              </Validation>
             </InputWrapper>
             <InputWrapper>
               <FormLabel>დეპარტამენტი</FormLabel>

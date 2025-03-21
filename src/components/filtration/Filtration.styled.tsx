@@ -53,6 +53,8 @@ export const OptionsDropDown = styled.div`
   flex-direction: column;
   gap: 22px;
   min-width: 688px;
+  max-height: 273px;
+  overflow: scroll;
   top: 55px;
 `;
 

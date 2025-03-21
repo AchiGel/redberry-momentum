@@ -21,6 +21,10 @@ export const TaskCardLayout = styled.div<{ $layoutColor: number }>`
     cursor: pointer;
     border-width: 2px;
   }
+
+  @media (max-width: 1440px) {
+    padding: 10px;
+  }
 `;
 
 export const TaskCardUpper = styled.div`
