@@ -62,6 +62,10 @@ export const OptionLabel = styled.label`
   display: flex;
   gap: 15px;
   align-items: center;
+  &:hover {
+    cursor: pointer;
+    background-color: #f8f9fa;
+  }
 `;
 
 export const OptionLabelName = styled.span`
