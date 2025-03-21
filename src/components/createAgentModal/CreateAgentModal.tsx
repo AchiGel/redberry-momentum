@@ -228,7 +228,6 @@ export default function CreateAgentModal({
       ////////////////////////////////
       setUpdateEmployees((prev) => prev + 1);
       //////////////////////////////////
-      console.log("employee posted successfuly");
       setIsOpen(false);
     } catch (error) {
       console.log("error posting employee", error);

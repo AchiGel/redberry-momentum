@@ -286,8 +286,6 @@ export default function CreateTaskPage() {
       formData.append("employee_id", selectedEmployeeObj.id.toString());
     if (selectedDate) formData.append("due_date", selectedDate);
 
-    console.log("Form Data:", Object.fromEntries(formData.entries()));
-
     try {
       await postNewTask(formData);
       setName("");
@@ -304,7 +302,6 @@ export default function CreateTaskPage() {
       setDepartmentIsTouched(false);
       setEmployeeIsTouched(false);
       setDateIsTouched(false);
-      console.log("task posted successfuly");
       localStorage.removeItem("form_fields");
       navigate("/");
     } catch (error) {
